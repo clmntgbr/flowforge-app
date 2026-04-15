@@ -1,10 +1,14 @@
 "use client"
 
 import { useCallback, useEffect, useReducer } from "react"
-import { getProject, getProjects, postProject } from "./api"
+import { getProject, getProjects, postProject, putProject } from "./api"
 import { ProjectContext } from "./context"
 import { ProjectReducer } from "./reducer"
-import { CreateProjectPayload, ProjectState } from "./types"
+import {
+  CreateProjectPayload,
+  ProjectState,
+  UpdateProjectPayload,
+} from "./types"
 
 const initialState: ProjectState = {
   projects: [],
@@ -56,6 +60,18 @@ export function ProjectProvider({ children }: { children: React.ReactNode }) {
     [fetchProjects]
   )
 
+  const updateProject = useCallback(
+    async (id: string, payload: UpdateProjectPayload) => {
+      try {
+        await putProject(id, payload)
+        fetchProjects()
+      } catch {
+        throw new Error("Failed to update project")
+      }
+    },
+    [fetchProjects]
+  )
+
   useEffect(() => {
     fetchProjects()
   }, [fetchProjects])
@@ -67,6 +83,7 @@ export function ProjectProvider({ children }: { children: React.ReactNode }) {
         fetchProjects,
         fetchProject,
         createProject,
+        updateProject,
       }}
     >
       {children}

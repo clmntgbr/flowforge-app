@@ -8,7 +8,13 @@ import { useEffect, useState } from "react"
 
 export default function Page() {
   const { user } = useUser()
-  const { projects, activeProject, fetchProject, createProject } = useProject()
+  const {
+    projects,
+    activeProject,
+    fetchProject,
+    createProject,
+    updateProject,
+  } = useProject()
 
   const [project, setProject] = useState<Project | null>(null)
 
@@ -24,9 +30,21 @@ export default function Page() {
     createProject({ name: crypto.randomUUID() })
   }
 
+  const handleUpdateProject = () => {
+    const id =
+      projects.find((project) => project.isActive)?.id ??
+      projects[Math.floor(Math.random() * projects.length)]?.id
+    if (!id) return
+    updateProject(id, {
+      name: crypto.randomUUID(),
+      description: crypto.randomUUID(),
+    })
+  }
+
   return (
     <>
       <Button onClick={handleCreateProject}>Create Project</Button>
+      <Button onClick={handleUpdateProject}>Update Project</Button>
       <h1>User</h1>
       <pre>{JSON.stringify(user, null, 2)}</pre>
       <h1>Projects</h1>

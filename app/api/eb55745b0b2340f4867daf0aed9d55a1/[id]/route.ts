@@ -14,8 +14,6 @@ export async function GET(
 
     const { id } = await params
 
-    console.log("id", id)
-
     const response = await fetch(`${BACKEND_API_URL}/api/projects/${id}`, {
       method: "GET",
       headers: createAuthHeaders(auth.token),
@@ -26,6 +24,34 @@ export async function GET(
     }
 
     return NextResponse.json(await response.json())
+  } catch {
+    return NextResponse.json({ success: false }, { status: 500 })
+  }
+}
+
+export async function PUT(
+  request: NextRequest,
+  { params }: { params: Promise<{ id: string }> }
+) {
+  try {
+    const auth = await requireAuth()
+    if ("error" in auth) return auth.error
+
+    const { id } = await params
+    const payload = await request.json()
+
+    const response = await fetch(`${BACKEND_API_URL}/api/projects/${id}`, {
+      method: "PUT",
+      headers: createAuthHeaders(auth.token),
+      body: JSON.stringify(payload),
+    })
+
+    if (!response.ok) {
+      return NextResponse.json({ success: false }, { status: response.status })
+    }
+
+    await response.json()
+    return NextResponse.json({ success: true })
   } catch {
     return NextResponse.json({ success: false }, { status: 500 })
   }

@@ -16,9 +16,8 @@ export interface CreateProjectPayload {
 }
 
 export interface UpdateProjectPayload {
-  id: string
   name: string
-  description: string
+  description?: string
 }
 
 export type ProjectAction =
