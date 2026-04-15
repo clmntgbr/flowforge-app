@@ -1,5 +1,6 @@
 "use client"
 
+import { Button } from "@/components/ui/button"
 import { useProject } from "@/lib/project/context"
 import { Project } from "@/lib/project/types"
 import { useUser } from "@/lib/user/context"
@@ -7,7 +8,7 @@ import { useEffect, useState } from "react"
 
 export default function Page() {
   const { user } = useUser()
-  const { projects, activeProject, fetchProject } = useProject()
+  const { projects, activeProject, fetchProject, createProject } = useProject()
 
   const [project, setProject] = useState<Project | null>(null)
 
@@ -19,8 +20,13 @@ export default function Page() {
     }
   }, [fetchProject, activeProject])
 
+  const handleCreateProject = () => {
+    createProject({ name: crypto.randomUUID() })
+  }
+
   return (
     <>
+      <Button onClick={handleCreateProject}>Create Project</Button>
       <h1>User</h1>
       <pre>{JSON.stringify(user, null, 2)}</pre>
       <h1>Projects</h1>

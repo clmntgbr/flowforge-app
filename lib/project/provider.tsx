@@ -1,10 +1,10 @@
 "use client"
 
 import { useCallback, useEffect, useReducer } from "react"
-import { getProject, getProjects } from "./api"
+import { getProject, getProjects, postProject } from "./api"
 import { ProjectContext } from "./context"
 import { ProjectReducer } from "./reducer"
-import { ProjectState } from "./types"
+import { CreateProjectPayload, ProjectState } from "./types"
 
 const initialState: ProjectState = {
   projects: [],
@@ -44,6 +44,18 @@ export function ProjectProvider({ children }: { children: React.ReactNode }) {
     }
   }, [])
 
+  const createProject = useCallback(
+    async (payload: CreateProjectPayload) => {
+      try {
+        await postProject(payload)
+        fetchProjects()
+      } catch {
+        throw new Error("Failed to create project")
+      }
+    },
+    [fetchProjects]
+  )
+
   useEffect(() => {
     fetchProjects()
   }, [fetchProjects])
@@ -54,6 +66,7 @@ export function ProjectProvider({ children }: { children: React.ReactNode }) {
         ...state,
         fetchProjects,
         fetchProject,
+        createProject,
       }}
     >
       {children}
