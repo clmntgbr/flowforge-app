@@ -1,10 +1,11 @@
 "use client"
 
 import { createContext, useContext } from "react"
-import { ProjectState } from "./types"
+import { Project, ProjectState } from "./types"
 
 export interface ProjectContextType extends ProjectState {
   fetchProjects: () => Promise<void>
+  fetchProject: (id: string) => Promise<Project>
 }
 
 export const ProjectContext = createContext<ProjectContextType | undefined>(

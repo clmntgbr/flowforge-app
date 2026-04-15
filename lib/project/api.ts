@@ -11,3 +11,15 @@ export const getProjects = async (): Promise<Project[]> => {
 
   return response.json()
 }
+
+export const getProject = async (id: string): Promise<Project> => {
+  const response = await fetch(`/api/eb55745b0b2340f4867daf0aed9d55a1/${id}`, {
+    method: "GET",
+  })
+
+  if (!response.ok) {
+    throw new Error("Failed to fetch project")
+  }
+
+  return response.json()
+}

@@ -9,7 +9,7 @@ export const ProjectReducer = (
       return {
         ...state,
         projects: action.payload,
-        project: action.project,
+        activeProject: action.activeProject,
         isLoading: false,
         error: null,
       }

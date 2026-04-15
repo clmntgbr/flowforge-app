@@ -1,16 +1,33 @@
 "use client"
 
 import { useProject } from "@/lib/project/context"
+import { Project } from "@/lib/project/types"
 import { useUser } from "@/lib/user/context"
+import { useEffect, useState } from "react"
 
 export default function Page() {
   const { user } = useUser()
-  const { projects, project } = useProject()
+  const { projects, activeProject, fetchProject } = useProject()
+
+  const [project, setProject] = useState<Project | null>(null)
+
+  useEffect(() => {
+    if (activeProject) {
+      fetchProject(activeProject.id).then((project) => {
+        setProject(project)
+      })
+    }
+  }, [fetchProject, activeProject])
 
   return (
     <>
+      <h1>User</h1>
       <pre>{JSON.stringify(user, null, 2)}</pre>
+      <h1>Projects</h1>
       <pre>{JSON.stringify(projects, null, 2)}</pre>
+      <h1>Active Project</h1>
+      <pre>{JSON.stringify(activeProject, null, 2)}</pre>
+      <h1>Get Project by ID</h1>
       <pre>{JSON.stringify(project, null, 2)}</pre>
     </>
   )

@@ -1,14 +1,14 @@
 "use client"
 
 import { useCallback, useEffect, useReducer } from "react"
-import { getProjects } from "./api"
+import { getProject, getProjects } from "./api"
 import { ProjectContext } from "./context"
 import { ProjectReducer } from "./reducer"
 import { ProjectState } from "./types"
 
 const initialState: ProjectState = {
   projects: [],
-  project: null,
+  activeProject: null,
   isLoading: false,
   error: null,
 }
@@ -23,7 +23,7 @@ export function ProjectProvider({ children }: { children: React.ReactNode }) {
       dispatch({
         type: "GET_PROJECTS",
         payload: projects,
-        project: projects.find((project) => project.isActive) ?? null,
+        activeProject: projects.find((project) => project.isActive) ?? null,
       })
     } catch {
       dispatch({
@@ -32,6 +32,15 @@ export function ProjectProvider({ children }: { children: React.ReactNode }) {
       })
     } finally {
       dispatch({ type: "GET_PROJECTS_LOADING", payload: false })
+    }
+  }, [])
+
+  const fetchProject = useCallback(async (id: string) => {
+    try {
+      const project = await getProject(id)
+      return project
+    } catch {
+      throw new Error("Failed to fetch project")
     }
   }, [])
 
@@ -44,6 +53,7 @@ export function ProjectProvider({ children }: { children: React.ReactNode }) {
       value={{
         ...state,
         fetchProjects,
+        fetchProject,
       }}
     >
       {children}

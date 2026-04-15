@@ -6,7 +6,7 @@ export interface Project {
 
 export interface ProjectState {
   projects: Project[]
-  project: Project | null
+  activeProject: Project | null
   isLoading: boolean
   error: string | null
 }
@@ -25,7 +25,7 @@ export type ProjectAction =
   | {
       type: "GET_PROJECTS"
       payload: Project[]
-      project: Project | null
+      activeProject: Project | null
     }
   | { type: "GET_PROJECTS_ERROR"; payload: string }
   | { type: "GET_PROJECTS_LOADING"; payload: boolean }
