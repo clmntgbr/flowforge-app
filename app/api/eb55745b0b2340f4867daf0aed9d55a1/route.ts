@@ -9,7 +9,7 @@ export async function GET() {
     const auth = await requireAuth()
     if ("error" in auth) return auth.error
 
-    const response = await fetch(`${BACKEND_API_URL}/api/users/me`, {
+    const response = await fetch(`${BACKEND_API_URL}/api/projects`, {
       method: "GET",
       headers: createAuthHeaders(auth.token),
     })

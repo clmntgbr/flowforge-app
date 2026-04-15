@@ -1,3 +1,4 @@
+import { ProjectProvider } from "@/lib/project/provider"
 import { ThemeProvider } from "@/lib/theme/theme-provider"
 import { UserProvider } from "@/lib/user/provider"
 
@@ -14,7 +15,9 @@ export default function PrivateLayout({
       disableTransitionOnChange
     >
       <UserProvider>
-        <div className="mx-auto px-0">{children}</div>
+        <ProjectProvider>
+          <div className="mx-auto px-0">{children}</div>
+        </ProjectProvider>
       </UserProvider>
     </ThemeProvider>
   )
