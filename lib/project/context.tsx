@@ -13,6 +13,7 @@ export interface ProjectContextType extends ProjectState {
   fetchProject: (id: string) => Promise<Project>
   createProject: (payload: CreateProjectPayload) => Promise<void>
   updateProject: (id: string, payload: UpdateProjectPayload) => Promise<void>
+  activateProject: (id: string) => Promise<void>
 }
 
 export const ProjectContext = createContext<ProjectContextType | undefined>(

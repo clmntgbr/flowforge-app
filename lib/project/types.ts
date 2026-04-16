@@ -2,6 +2,7 @@ export interface Project {
   id: string
   isActive: boolean
   name: string
+  description?: string
 }
 
 export interface ProjectState {

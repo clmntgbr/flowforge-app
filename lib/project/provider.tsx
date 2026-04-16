@@ -1,7 +1,13 @@
 "use client"
 
 import { useCallback, useEffect, useReducer } from "react"
-import { getProject, getProjects, postProject, putProject } from "./api"
+import {
+  getProject,
+  getProjects,
+  postProject,
+  putActivateProject,
+  putProject,
+} from "./api"
 import { ProjectContext } from "./context"
 import { ProjectReducer } from "./reducer"
 import {
@@ -72,6 +78,18 @@ export function ProjectProvider({ children }: { children: React.ReactNode }) {
     [fetchProjects]
   )
 
+  const activateProject = useCallback(
+    async (id: string) => {
+      try {
+        await putActivateProject(id)
+        fetchProjects()
+      } catch {
+        throw new Error("Failed to activate project")
+      }
+    },
+    [fetchProjects]
+  )
+
   useEffect(() => {
     fetchProjects()
   }, [fetchProjects])
@@ -84,6 +102,7 @@ export function ProjectProvider({ children }: { children: React.ReactNode }) {
         fetchProject,
         createProject,
         updateProject,
+        activateProject,
       }}
     >
       {children}

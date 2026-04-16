@@ -1,44 +1,38 @@
 "use client"
 
+import { Badge } from "@/components/ui/badge"
 import { Button } from "@/components/ui/button"
+import {
+  Card,
+  CardContent,
+  CardDescription,
+  CardFooter,
+  CardHeader,
+  CardTitle,
+} from "@/components/ui/card"
 import { useProject } from "@/lib/project/context"
-import { Project } from "@/lib/project/types"
 import { useUser } from "@/lib/user/context"
-import { useEffect, useState } from "react"
 
 export default function Page() {
   const { user } = useUser()
-  const {
-    projects,
-    activeProject,
-    fetchProject,
-    createProject,
-    updateProject,
-  } = useProject()
-
-  const [project, setProject] = useState<Project | null>(null)
-
-  useEffect(() => {
-    if (activeProject) {
-      fetchProject(activeProject.id).then((project) => {
-        setProject(project)
-      })
-    }
-  }, [fetchProject, activeProject])
+  const { projects, createProject, updateProject, activateProject } =
+    useProject()
 
   const handleCreateProject = () => {
     createProject({ name: crypto.randomUUID() })
   }
 
   const handleUpdateProject = () => {
-    const id =
-      projects.find((project) => project.isActive)?.id ??
-      projects[Math.floor(Math.random() * projects.length)]?.id
+    const id = projects[Math.floor(Math.random() * projects.length)]?.id
     if (!id) return
     updateProject(id, {
       name: crypto.randomUUID(),
       description: crypto.randomUUID(),
     })
+  }
+
+  const handleActivateProject = (id: string) => {
+    activateProject(id)
   }
 
   return (
@@ -48,11 +42,26 @@ export default function Page() {
       <h1>User</h1>
       <pre>{JSON.stringify(user, null, 2)}</pre>
       <h1>Projects</h1>
-      <pre>{JSON.stringify(projects, null, 2)}</pre>
-      <h1>Active Project</h1>
-      <pre>{JSON.stringify(activeProject, null, 2)}</pre>
-      <h1>Get Project by ID</h1>
-      <pre>{JSON.stringify(project, null, 2)}</pre>
+      {projects.map((project) => (
+        <Card key={project.id} className="mb-4">
+          <CardHeader>
+            <CardTitle className="text-lg font-bold">
+              title: {project.name}
+            </CardTitle>
+            <CardDescription>
+              description: {project.description}
+            </CardDescription>
+            <CardContent>
+              <Badge>{project.isActive ? "Active" : "Inactive"}</Badge>
+            </CardContent>
+          </CardHeader>
+          <CardFooter>
+            <Button onClick={() => handleActivateProject(project.id)}>
+              Activate
+            </Button>
+          </CardFooter>
+        </Card>
+      ))}
     </>
   )
 }

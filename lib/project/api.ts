@@ -54,3 +54,18 @@ export const putProject = async (
 
   return response.json()
 }
+
+export const putActivateProject = async (id: string): Promise<Project> => {
+  const response = await fetch(
+    `/api/eb55745b0b2340f4867daf0aed9d55a1/${id}/activate`,
+    {
+      method: "PUT",
+    }
+  )
+
+  if (!response.ok) {
+    throw new Error("Failed to activate project")
+  }
+
+  return response.json()
+}
