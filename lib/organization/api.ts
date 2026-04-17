@@ -5,9 +5,12 @@ import {
 } from "./types"
 
 export const getOrganizations = async (): Promise<Organization[]> => {
-  const response = await fetch("/api/eb55745b0b2340f4867daf0aed9d55a1", {
-    method: "GET",
-  })
+  const response = await fetch(
+    "/api/organization/eb55745b0b2340f4867daf0aed9d55a1",
+    {
+      method: "GET",
+    }
+  )
 
   if (!response.ok) {
     throw new Error("Failed to fetch organizations")
@@ -17,9 +20,12 @@ export const getOrganizations = async (): Promise<Organization[]> => {
 }
 
 export const getOrganization = async (id: string): Promise<Organization> => {
-  const response = await fetch(`/api/eb55745b0b2340f4867daf0aed9d55a1/${id}`, {
-    method: "GET",
-  })
+  const response = await fetch(
+    `/api/organization/eb55745b0b2340f4867daf0aed9d55a1/${id}`,
+    {
+      method: "GET",
+    }
+  )
 
   if (!response.ok) {
     throw new Error("Failed to fetch organization")
@@ -31,10 +37,13 @@ export const getOrganization = async (id: string): Promise<Organization> => {
 export const postOrganization = async (
   payload: CreateOrganizationPayload
 ): Promise<void> => {
-  const response = await fetch("/api/eb55745b0b2340f4867daf0aed9d55a1", {
-    method: "POST",
-    body: JSON.stringify(payload),
-  })
+  const response = await fetch(
+    "/api/organization/eb55745b0b2340f4867daf0aed9d55a1",
+    {
+      method: "POST",
+      body: JSON.stringify(payload),
+    }
+  )
 
   if (!response.ok) {
     throw new Error("Failed to create organization")
@@ -47,10 +56,13 @@ export const putOrganization = async (
   id: string,
   payload: UpdateOrganizationPayload
 ): Promise<void> => {
-  const response = await fetch(`/api/eb55745b0b2340f4867daf0aed9d55a1/${id}`, {
-    method: "PUT",
-    body: JSON.stringify(payload),
-  })
+  const response = await fetch(
+    `/api/organization/eb55745b0b2340f4867daf0aed9d55a1/${id}`,
+    {
+      method: "PUT",
+      body: JSON.stringify(payload),
+    }
+  )
 
   if (!response.ok) {
     throw new Error("Failed to update organization")
@@ -63,7 +75,7 @@ export const putActivateOrganization = async (
   id: string
 ): Promise<Organization> => {
   const response = await fetch(
-    `/api/eb55745b0b2340f4867daf0aed9d55a1/${id}/activate`,
+    `/api/organization/eb55745b0b2340f4867daf0aed9d55a1/${id}/activate`,
     {
       method: "PUT",
     }

@@ -2,13 +2,23 @@
 
 import { useCallback, useEffect, useReducer } from "react"
 import { initPaginate } from "../paginate"
-import { getWorkflow, getWorkflows, postWorkflow, putWorkflow } from "./api"
+import {
+  deleteConnexion,
+  getWorkflow,
+  getWorkflows,
+  postConnexion,
+  postWorkflow,
+  putWorkflow,
+  putWorkflowSteps,
+} from "./api"
 import { WorkflowContext } from "./context"
 import { WorkflowReducer } from "./reducer"
 import {
+  CreateConnexionPayload,
   CreateWorkflowPayload,
   MinimalWorkflow,
   UpdateWorkflowPayload,
+  UpdateWorkflowStepsPayload,
   WorkflowState,
 } from "./types"
 
@@ -60,6 +70,18 @@ export function WorkflowProvider({ children }: { children: React.ReactNode }) {
     [fetchWorkflows]
   )
 
+  const updateWorkflowSteps = useCallback(
+    async (id: string, payload: UpdateWorkflowStepsPayload) => {
+      try {
+        await putWorkflowSteps(id, payload)
+        fetchWorkflows()
+      } catch {
+        throw new Error("Failed to update workflow")
+      }
+    },
+    [fetchWorkflows]
+  )
+
   const updateWorkflow = useCallback(
     async (id: string, payload: UpdateWorkflowPayload) => {
       try {
@@ -72,6 +94,22 @@ export function WorkflowProvider({ children }: { children: React.ReactNode }) {
     [fetchWorkflows]
   )
 
+  const removeConnexion = useCallback(async (id: string) => {
+    try {
+      await deleteConnexion(id)
+    } catch {
+      throw new Error("Failed to delete connexion")
+    }
+  }, [])
+
+  const addConnexion = useCallback(async (payload: CreateConnexionPayload) => {
+    try {
+      return await postConnexion(payload)
+    } catch {
+      throw new Error("Failed to add connexion")
+    }
+  }, [])
+
   useEffect(() => {
     fetchWorkflows()
   }, [fetchWorkflows])
@@ -83,7 +121,10 @@ export function WorkflowProvider({ children }: { children: React.ReactNode }) {
         fetchWorkflows,
         fetchWorkflow,
         createWorkflow,
+        updateWorkflowSteps,
         updateWorkflow,
+        removeConnexion,
+        addConnexion,
       }}
     >
       {children}

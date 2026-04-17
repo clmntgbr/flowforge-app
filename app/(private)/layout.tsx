@@ -1,3 +1,4 @@
+import { SidebarProvider } from "@/components/ui/sidebar"
 import { EndpointProvider } from "@/lib/endpoint/provider"
 import { OrganizationProvider } from "@/lib/organization/provider"
 import { ThemeProvider } from "@/lib/theme/theme-provider"
@@ -20,7 +21,9 @@ export default function PrivateLayout({
         <OrganizationProvider>
           <EndpointProvider>
             <WorkflowProvider>
-              <div className="mx-auto px-0">{children}</div>
+              <SidebarProvider defaultOpen={false}>
+                <div className="mx-auto px-0">{children}</div>
+              </SidebarProvider>
             </WorkflowProvider>
           </EndpointProvider>
         </OrganizationProvider>

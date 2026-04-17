@@ -2,14 +2,14 @@ import { Paginate } from "@/lib/paginate"
 
 export interface Endpoint extends MinimalEndpoint {
   baseUri: string
-  path: string
-  method: string
   timeout: number
 }
 
 export interface MinimalEndpoint {
   id: string
   name: string
+  method: string
+  path: string
   createdAt: string
   updatedAt: string
 }

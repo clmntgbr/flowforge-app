@@ -12,7 +12,7 @@ export interface WorkflowStep {
   index?: string
 }
 
-export interface WorkflowConnection {
+export interface WorkflowConnexion {
   id: string
   from: string
   to: string
@@ -22,8 +22,10 @@ export interface Workflow {
   id: string
   name: string
   description?: string
-  createdAt: string
-  updatedAt: string
+  steps?: WorkflowStep[]
+  connexions?: WorkflowConnexion[]
+  createdAt?: string
+  updatedAt?: string
 }
 
 export interface MinimalWorkflow {
@@ -41,7 +43,11 @@ export interface UpdateWorkflowPayload {
   description?: string
 }
 
-export interface CreateConnectionPayload {
+export interface UpdateWorkflowStepsPayload {
+  steps: WorkflowStep[]
+}
+
+export interface CreateConnexionPayload {
   workflowId: string
   from: string
   to: string

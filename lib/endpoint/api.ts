@@ -7,9 +7,12 @@ import {
 } from "./types"
 
 export const getEndpoints = async (): Promise<Paginate<MinimalEndpoint>> => {
-  const response = await fetch("/api/b97d4315d1c44b188589ddb82de244a8", {
-    method: "GET",
-  })
+  const response = await fetch(
+    "/api/endpoint/b97d4315d1c44b188589ddb82de244a8",
+    {
+      method: "GET",
+    }
+  )
 
   if (!response.ok) {
     throw new Error("Failed to fetch endpoints")
@@ -19,9 +22,12 @@ export const getEndpoints = async (): Promise<Paginate<MinimalEndpoint>> => {
 }
 
 export const getEndpoint = async (id: string): Promise<Endpoint> => {
-  const response = await fetch(`/api/b97d4315d1c44b188589ddb82de244a8/${id}`, {
-    method: "GET",
-  })
+  const response = await fetch(
+    `/api/endpoint/b97d4315d1c44b188589ddb82de244a8/${id}`,
+    {
+      method: "GET",
+    }
+  )
 
   if (!response.ok) {
     throw new Error("Failed to fetch endpoint")
@@ -33,10 +39,13 @@ export const getEndpoint = async (id: string): Promise<Endpoint> => {
 export const postEndpoint = async (
   payload: CreateEndpointPayload
 ): Promise<void> => {
-  const response = await fetch("/api/b97d4315d1c44b188589ddb82de244a8", {
-    method: "POST",
-    body: JSON.stringify(payload),
-  })
+  const response = await fetch(
+    "/api/endpoint/b97d4315d1c44b188589ddb82de244a8",
+    {
+      method: "POST",
+      body: JSON.stringify(payload),
+    }
+  )
 
   if (!response.ok) {
     throw new Error("Failed to create endpoint")
@@ -49,10 +58,13 @@ export const putEndpoint = async (
   id: string,
   payload: UpdateEndpointPayload
 ): Promise<void> => {
-  const response = await fetch(`/api/b97d4315d1c44b188589ddb82de244a8/${id}`, {
-    method: "PUT",
-    body: JSON.stringify(payload),
-  })
+  const response = await fetch(
+    `/api/endpoint/b97d4315d1c44b188589ddb82de244a8/${id}`,
+    {
+      method: "PUT",
+      body: JSON.stringify(payload),
+    }
+  )
 
   console.log(response)
 
