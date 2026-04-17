@@ -66,8 +66,6 @@ export const putEndpoint = async (
     }
   )
 
-  console.log(response)
-
   if (!response.ok) {
     throw new Error("Failed to update endpoint")
   }

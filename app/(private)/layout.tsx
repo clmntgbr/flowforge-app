@@ -1,6 +1,7 @@
 import { SidebarProvider } from "@/components/ui/sidebar"
 import { EndpointProvider } from "@/lib/endpoint/provider"
 import { OrganizationProvider } from "@/lib/organization/provider"
+import { StepProvider } from "@/lib/step/provider"
 import { ThemeProvider } from "@/lib/theme/theme-provider"
 import { UserProvider } from "@/lib/user/provider"
 import { WorkflowProvider } from "@/lib/workflow/provider"
@@ -21,9 +22,11 @@ export default function PrivateLayout({
         <OrganizationProvider>
           <EndpointProvider>
             <WorkflowProvider>
-              <SidebarProvider defaultOpen={false}>
-                <div className="mx-auto px-0">{children}</div>
-              </SidebarProvider>
+              <StepProvider>
+                <SidebarProvider defaultOpen={false}>
+                  <div className="mx-auto px-0">{children}</div>
+                </SidebarProvider>
+              </StepProvider>
             </WorkflowProvider>
           </EndpointProvider>
         </OrganizationProvider>

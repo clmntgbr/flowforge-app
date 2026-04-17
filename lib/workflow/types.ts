@@ -1,16 +1,5 @@
 import { Paginate } from "@/lib/paginate"
-import { Endpoint } from "../endpoint/types"
-
-export interface WorkflowStep {
-  id: string
-  name: string
-  description?: string
-  timeout?: number
-  endpointId: string
-  endpoint: Endpoint
-  position: { x: number; y: number }
-  index?: string
-}
+import { Step } from "../step/types"
 
 export interface WorkflowConnexion {
   id: string
@@ -22,7 +11,7 @@ export interface Workflow {
   id: string
   name: string
   description?: string
-  steps?: WorkflowStep[]
+  steps?: Step[]
   connexions?: WorkflowConnexion[]
   createdAt?: string
   updatedAt?: string
@@ -44,7 +33,7 @@ export interface UpdateWorkflowPayload {
 }
 
 export interface UpdateWorkflowStepsPayload {
-  steps: WorkflowStep[]
+  steps: Step[]
 }
 
 export interface CreateConnexionPayload {

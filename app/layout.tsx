@@ -5,7 +5,6 @@ import {
   SignedIn,
   SignedOut,
   SignInButton,
-  SignOutButton,
   SignUpButton,
   UserButton,
 } from "@clerk/nextjs"
@@ -44,7 +43,7 @@ export default function RootLayout({
       <body>
         <ClerkProvider>
           <ThemeProvider>
-            <header className="flex h-16 items-center justify-end gap-4 p-4">
+            <header className="flex items-center justify-end gap-4 border-b p-4">
               <SignedOut>
                 <>
                   <SignInButton />
@@ -57,7 +56,7 @@ export default function RootLayout({
               </SignedOut>
               <SignedIn>
                 <UserButton />
-                <SignOutButton />
+                {/* <SignOutButton /> */}
               </SignedIn>
             </header>
             {children}

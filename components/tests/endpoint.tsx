@@ -21,14 +21,6 @@ export default function EndpointTest() {
 
   const handleUpdateEndpoint = (endpointId: string) => {
     fetchEndpoint(endpointId).then((endpoint: Endpoint) => {
-      console.log(endpoint)
-      console.log({
-        name: crypto.randomUUID(),
-        baseUri: endpoint.baseUri,
-        path: endpoint.path,
-        method: endpoint.method,
-        timeout: endpoint.timeout,
-      })
       updateEndpoint(endpointId, {
         name: crypto.randomUUID(),
         baseUri: endpoint.baseUri,

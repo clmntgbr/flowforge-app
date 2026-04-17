@@ -3,6 +3,7 @@ import {
   GetMethodCodeColor,
   GetMethodColor,
 } from "@/lib/method-color"
+import { Step } from "@/lib/step/types"
 import { cn } from "@/lib/utils"
 import { Handle, Position, type NodeProps } from "@xyflow/react"
 import { SquarePenIcon } from "lucide-react"
@@ -10,10 +11,9 @@ import { memo } from "react"
 import { Badge } from "./ui/badge"
 import { Button } from "./ui/button"
 import { Card } from "./ui/card"
-import { WorkflowStep } from "./workflow-canvas"
 
 function StepNode({ data, selected }: NodeProps) {
-  const step = data.step as WorkflowStep
+  const step = data.step as Step
   const onEditClick = data.onEditClick as (() => void) | undefined
 
   const handleEditClick = (e: React.MouseEvent) => {
@@ -32,11 +32,6 @@ function StepNode({ data, selected }: NodeProps) {
         )}
       >
         <div className="flex flex-row items-center px-3">
-          <div className="flex flex-row items-center gap-2">
-            <Badge variant="outline" className="text-xs">
-              {step.index}
-            </Badge>
-          </div>
           <Badge
             variant="outline"
             className={cn(GetMethodColor(step.endpoint?.method))}

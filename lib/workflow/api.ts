@@ -127,10 +127,6 @@ export const postConnexion = async (
 
   const data = await response.json()
 
-  console.log("********************************************************")
-  console.log(data)
-  console.log("********************************************************")
-
   return connectionFromResponse(data, {
     from: payload.from,
     to: payload.to,

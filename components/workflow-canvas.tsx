@@ -1,10 +1,7 @@
 import type { Endpoint } from "@/lib/endpoint/types"
+import { Step } from "@/lib/step/types"
 import { useWorkflow } from "@/lib/workflow/context"
-import type {
-  Workflow,
-  WorkflowConnexion,
-  WorkflowStep,
-} from "@/lib/workflow/types"
+import type { Workflow, WorkflowConnexion } from "@/lib/workflow/types"
 import {
   addEdge,
   applyEdgeChanges,
@@ -42,14 +39,14 @@ import StepNode from "./step-node"
 
 const nodeTypes = { stepNode: StepNode }
 
-export type { Workflow, WorkflowStep }
+export type { Step, Workflow }
 
 export type WorkflowCanvasRef = object
 
 interface WorkflowCanvasProps {
   workflow?: Workflow
   onWorkflowChange?: (workflow: Workflow) => void
-  onStepSelect?: (step: WorkflowStep | null) => void
+  onStepSelect?: (step: Step | null) => void
   onSave?: (workflow: Workflow) => void | Promise<void>
 }
 
@@ -263,15 +260,15 @@ function reactFlowToWorkflow(
     ? calculateStepIndexes(nodes, edges)
     : new Map(
         nodes.map((node) => {
-          const step = node.data.step as WorkflowStep | undefined
+          const step = node.data.step as Step | undefined
           const existingIndex =
             step?.index || (node.data.index as string | undefined) || "0"
           return [node.id, existingIndex]
         })
       )
 
-  const steps: WorkflowStep[] = nodes.map((node) => {
-    const step = node.data.step as WorkflowStep
+  const steps: Step[] = nodes.map((node) => {
+    const step = node.data.step as Step
     return {
       id: node.id,
       name: step.name,
@@ -348,7 +345,7 @@ const WorkflowCanvas = forwardRef<WorkflowCanvasRef, WorkflowCanvasProps>(
               data: {
                 ...node.data,
                 step: {
-                  ...(node.data.step as WorkflowStep),
+                  ...(node.data.step as Step),
                   name: workflowStep.name,
                   description: workflowStep.description,
                   timeout: workflowStep.timeout,
@@ -383,7 +380,7 @@ const WorkflowCanvas = forwardRef<WorkflowCanvasRef, WorkflowCanvasProps>(
         let hasAnyChange = false
         const nextNodes = currentNodes.map((node) => {
           const nextIndex = indexMap.get(node.id) || "0"
-          const currentStep = node.data.step as WorkflowStep | undefined
+          const currentStep = node.data.step as Step | undefined
           const currentIndex = currentStep?.index || "0"
           const currentDataIndex =
             (node.data.index as string | undefined) || "0"
@@ -413,18 +410,18 @@ const WorkflowCanvas = forwardRef<WorkflowCanvasRef, WorkflowCanvasProps>(
     const handleEditClick = useCallback(
       (node: Node) => {
         if (onStepSelect) {
-          const step = node.data.step as WorkflowStep
+          const step = node.data.step as Step
           const indexMap = shouldRecalculateIndexes
             ? calculateStepIndexes(nodes, edges)
             : new Map(
                 nodes.map((n) => [
                   n.id,
-                  ((n.data.step as WorkflowStep | undefined)?.index ||
+                  ((n.data.step as Step | undefined)?.index ||
                     (n.data.index as string | undefined) ||
                     "") as string,
                 ])
               )
-          const workflowStep: WorkflowStep = {
+          const workflowStep: Step = {
             id: node.id,
             name: step.name,
             description: step.description,
@@ -446,7 +443,7 @@ const WorkflowCanvas = forwardRef<WorkflowCanvasRef, WorkflowCanvasProps>(
           ? calculateStepIndexes(nodes, edges)
           : new Map(
               nodes.map((node) => {
-                const step = node.data.step as WorkflowStep | undefined
+                const step = node.data.step as Step | undefined
                 const existingIndex =
                   step?.index || (node.data.index as string | undefined) || "0"
                 return [node.id, existingIndex]
@@ -462,7 +459,7 @@ const WorkflowCanvas = forwardRef<WorkflowCanvasRef, WorkflowCanvasProps>(
         data: {
           ...node.data,
           step: {
-            ...((node.data.step as WorkflowStep) || {}),
+            ...((node.data.step as Step) || {}),
             index: nodeIndex,
           },
           index: nodeIndex,
@@ -578,7 +575,7 @@ const WorkflowCanvas = forwardRef<WorkflowCanvasRef, WorkflowCanvasProps>(
           y: event.clientY,
         })
 
-        const step: WorkflowStep = {
+        const step: Step = {
           id: endpoint.id,
           name: endpoint.name,
           timeout: endpoint.timeout,
