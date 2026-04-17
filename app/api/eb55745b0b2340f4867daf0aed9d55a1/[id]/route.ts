@@ -14,7 +14,7 @@ export async function GET(
 
     const { id } = await params
 
-    const response = await fetch(`${BACKEND_API_URL}/api/projects/${id}`, {
+    const response = await fetch(`${BACKEND_API_URL}/api/organizations/${id}`, {
       method: "GET",
       headers: createAuthHeaders(auth.token),
     })
@@ -40,7 +40,7 @@ export async function PUT(
     const { id } = await params
     const payload = await request.json()
 
-    const response = await fetch(`${BACKEND_API_URL}/api/projects/${id}`, {
+    const response = await fetch(`${BACKEND_API_URL}/api/organizations/${id}`, {
       method: "PUT",
       headers: createAuthHeaders(auth.token),
       body: JSON.stringify(payload),

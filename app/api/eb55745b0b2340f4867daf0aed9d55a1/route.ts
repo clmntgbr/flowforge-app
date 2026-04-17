@@ -9,7 +9,7 @@ export async function GET() {
     const auth = await requireAuth()
     if ("error" in auth) return auth.error
 
-    const response = await fetch(`${BACKEND_API_URL}/api/projects`, {
+    const response = await fetch(`${BACKEND_API_URL}/api/organizations`, {
       method: "GET",
       headers: createAuthHeaders(auth.token),
     })
@@ -31,7 +31,7 @@ export async function POST(request: NextRequest) {
 
     const payload = await request.json()
 
-    const response = await fetch(`${BACKEND_API_URL}/api/projects`, {
+    const response = await fetch(`${BACKEND_API_URL}/api/organizations`, {
       method: "POST",
       headers: createAuthHeaders(auth.token),
       body: JSON.stringify(payload),

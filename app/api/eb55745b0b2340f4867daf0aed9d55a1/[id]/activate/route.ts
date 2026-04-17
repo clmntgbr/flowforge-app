@@ -15,7 +15,7 @@ export async function PUT(
     const { id } = await params
 
     const response = await fetch(
-      `${BACKEND_API_URL}/api/projects/${id}/activate`,
+      `${BACKEND_API_URL}/api/organizations/${id}/activate`,
       {
         method: "PUT",
         headers: createAuthHeaders(auth.token),

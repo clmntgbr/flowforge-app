@@ -1,15 +1,15 @@
-import { ProjectAction, ProjectState } from "./types"
+import { OrganizationAction, OrganizationState } from "./types"
 
-export const ProjectReducer = (
-  state: ProjectState,
-  action: ProjectAction
-): ProjectState => {
+export const OrganizationReducer = (
+  state: OrganizationState,
+  action: OrganizationAction
+): OrganizationState => {
   switch (action.type) {
     case "GET_PROJECTS":
       return {
         ...state,
-        projects: action.payload,
-        activeProject: action.activeProject,
+        organizations: action.payload,
+        activeOrganization: action.activeOrganization,
         isLoading: false,
         error: null,
       }

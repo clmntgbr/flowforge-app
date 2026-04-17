@@ -10,53 +10,58 @@ import {
   CardHeader,
   CardTitle,
 } from "@/components/ui/card"
-import { useProject } from "@/lib/project/context"
+import { useOrganization } from "@/lib/organization/context"
 import { useUser } from "@/lib/user/context"
 
 export default function Page() {
   const { user } = useUser()
-  const { projects, createProject, updateProject, activateProject } =
-    useProject()
+  const {
+    organizations,
+    createOrganization,
+    updateOrganization,
+    activateOrganization,
+  } = useOrganization()
 
-  const handleCreateProject = () => {
-    createProject({ name: crypto.randomUUID() })
+  const handleCreateOrganization = () => {
+    createOrganization({ name: crypto.randomUUID() })
   }
 
-  const handleUpdateProject = () => {
-    const id = projects[Math.floor(Math.random() * projects.length)]?.id
+  const handleUpdateOrganization = () => {
+    const id =
+      organizations[Math.floor(Math.random() * organizations.length)]?.id
     if (!id) return
-    updateProject(id, {
+    updateOrganization(id, {
       name: crypto.randomUUID(),
       description: crypto.randomUUID(),
     })
   }
 
-  const handleActivateProject = (id: string) => {
-    activateProject(id)
+  const handleActivateOrganization = (id: string) => {
+    activateOrganization(id)
   }
 
   return (
     <>
-      <Button onClick={handleCreateProject}>Create Project</Button>
-      <Button onClick={handleUpdateProject}>Update Project</Button>
+      <Button onClick={handleCreateOrganization}>Create Organization</Button>
+      <Button onClick={handleUpdateOrganization}>Update Organization</Button>
       <h1>User</h1>
       <pre>{JSON.stringify(user, null, 2)}</pre>
-      <h1>Projects</h1>
-      {projects.map((project) => (
-        <Card key={project.id} className="mb-4">
+      <h1>Organizations</h1>
+      {organizations.map((organization) => (
+        <Card key={organization.id} className="mb-4">
           <CardHeader>
             <CardTitle className="text-lg font-bold">
-              title: {project.name}
+              title: {organization.name}
             </CardTitle>
             <CardDescription>
-              description: {project.description}
+              description: {organization.description}
             </CardDescription>
             <CardContent>
-              <Badge>{project.isActive ? "Active" : "Inactive"}</Badge>
+              <Badge>{organization.isActive ? "Active" : "Inactive"}</Badge>
             </CardContent>
           </CardHeader>
           <CardFooter>
-            <Button onClick={() => handleActivateProject(project.id)}>
+            <Button onClick={() => handleActivateOrganization(organization.id)}>
               Activate
             </Button>
           </CardFooter>

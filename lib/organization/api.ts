@@ -1,31 +1,35 @@
-import { CreateProjectPayload, Project, UpdateProjectPayload } from "./types"
+import {
+  CreateOrganizationPayload,
+  Organization,
+  UpdateOrganizationPayload,
+} from "./types"
 
-export const getProjects = async (): Promise<Project[]> => {
+export const getOrganizations = async (): Promise<Organization[]> => {
   const response = await fetch("/api/eb55745b0b2340f4867daf0aed9d55a1", {
     method: "GET",
   })
 
   if (!response.ok) {
-    throw new Error("Failed to fetch projects")
+    throw new Error("Failed to fetch organizations")
   }
 
   return response.json()
 }
 
-export const getProject = async (id: string): Promise<Project> => {
+export const getOrganization = async (id: string): Promise<Organization> => {
   const response = await fetch(`/api/eb55745b0b2340f4867daf0aed9d55a1/${id}`, {
     method: "GET",
   })
 
   if (!response.ok) {
-    throw new Error("Failed to fetch project")
+    throw new Error("Failed to fetch organization")
   }
 
   return response.json()
 }
 
-export const postProject = async (
-  payload: CreateProjectPayload
+export const postOrganization = async (
+  payload: CreateOrganizationPayload
 ): Promise<void> => {
   const response = await fetch("/api/eb55745b0b2340f4867daf0aed9d55a1", {
     method: "POST",
@@ -33,15 +37,15 @@ export const postProject = async (
   })
 
   if (!response.ok) {
-    throw new Error("Failed to create project")
+    throw new Error("Failed to create organization")
   }
 
   return response.json()
 }
 
-export const putProject = async (
+export const putOrganization = async (
   id: string,
-  payload: UpdateProjectPayload
+  payload: UpdateOrganizationPayload
 ): Promise<void> => {
   const response = await fetch(`/api/eb55745b0b2340f4867daf0aed9d55a1/${id}`, {
     method: "PUT",
@@ -49,13 +53,15 @@ export const putProject = async (
   })
 
   if (!response.ok) {
-    throw new Error("Failed to update project")
+    throw new Error("Failed to update organization")
   }
 
   return response.json()
 }
 
-export const putActivateProject = async (id: string): Promise<Project> => {
+export const putActivateOrganization = async (
+  id: string
+): Promise<Organization> => {
   const response = await fetch(
     `/api/eb55745b0b2340f4867daf0aed9d55a1/${id}/activate`,
     {
@@ -64,7 +70,7 @@ export const putActivateProject = async (id: string): Promise<Project> => {
   )
 
   if (!response.ok) {
-    throw new Error("Failed to activate project")
+    throw new Error("Failed to activate organization")
   }
 
   return response.json()

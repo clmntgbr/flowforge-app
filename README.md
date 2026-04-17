@@ -28,7 +28,7 @@ npm install
 
 ### 2) Configure environment variables
 
-Create a `.env.local` file at the project root:
+Create a `.env.local` file at the organization root:
 
 ```bash
 NEXT_PUBLIC_CLERK_PUBLISHABLE_KEY=pk_test_xxx
@@ -58,7 +58,7 @@ The app starts on [http://localhost:3001](http://localhost:3001).
 - `npm run typecheck`: run TypeScript checks
 - `npm run format`: format `ts`/`tsx` files with Prettier
 
-## Project Structure
+## Organization Structure
 
 ```text
 app/
