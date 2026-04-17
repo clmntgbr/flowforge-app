@@ -1,7 +1,12 @@
 import { Paginate } from "../paginate"
-import { CreateWorkflowPayload, UpdateWorkflowPayload, Workflow } from "./types"
+import {
+  CreateWorkflowPayload,
+  MinimalWorkflow,
+  UpdateWorkflowPayload,
+  Workflow,
+} from "./types"
 
-export const getWorkflows = async (): Promise<Paginate<Workflow>> => {
+export const getWorkflows = async (): Promise<Paginate<MinimalWorkflow>> => {
   const response = await fetch("/api/0cc345f76b884fd580c232f270c887da", {
     method: "GET",
   })

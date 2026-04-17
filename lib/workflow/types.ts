@@ -26,6 +26,11 @@ export interface Workflow {
   updatedAt: string
 }
 
+export interface MinimalWorkflow {
+  id: string
+  name: string
+}
+
 export interface CreateWorkflowPayload {
   name: string
   description?: string
@@ -43,12 +48,12 @@ export interface CreateConnectionPayload {
 }
 
 export interface WorkflowState {
-  workflows: Paginate<Workflow>
+  workflows: Paginate<MinimalWorkflow>
   isLoading: boolean
   error: string | null
 }
 
 export type WorkflowAction =
-  | { type: "GET_WORKFLOWS"; payload: Paginate<Workflow> }
+  | { type: "GET_WORKFLOWS"; payload: Paginate<MinimalWorkflow> }
   | { type: "GET_WORKFLOWS_ERROR"; payload: string }
   | { type: "GET_WORKFLOWS_LOADING"; payload: boolean }

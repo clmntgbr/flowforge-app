@@ -1,14 +1,10 @@
 "use client"
 
 import { Button } from "@/components/ui/button"
-import {
-  Card,
-  CardDescription,
-  CardHeader,
-  CardTitle,
-} from "@/components/ui/card"
+import { Card, CardHeader, CardTitle } from "@/components/ui/card"
 import { useWorkflow } from "@/lib/workflow/context"
 import { Workflow } from "@/lib/workflow/types"
+import Link from "next/link"
 
 export default function WorkflowTest() {
   const { workflows, createWorkflow, fetchWorkflow, updateWorkflow } =
@@ -42,11 +38,11 @@ export default function WorkflowTest() {
               name: {workflow.name}
               <br />
             </CardTitle>
-            <CardDescription>
-              description: {workflow.description}
-            </CardDescription>
             <Button onClick={() => handleUpdateWorkflow(workflow.id)}>
               Update Workflow
+            </Button>
+            <Button asChild>
+              <Link href={`/workflow/${workflow.id}`}>View Workflow</Link>
             </Button>
           </CardHeader>
         </Card>

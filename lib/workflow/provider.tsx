@@ -7,13 +7,13 @@ import { WorkflowContext } from "./context"
 import { WorkflowReducer } from "./reducer"
 import {
   CreateWorkflowPayload,
+  MinimalWorkflow,
   UpdateWorkflowPayload,
-  Workflow,
   WorkflowState,
 } from "./types"
 
 const initialState: WorkflowState = {
-  workflows: initPaginate<Workflow>(),
+  workflows: initPaginate<MinimalWorkflow>(),
   isLoading: false,
   error: null,
 }
