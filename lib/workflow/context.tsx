@@ -2,12 +2,10 @@
 
 import { createContext, useContext } from "react"
 import {
-  CreateConnexionPayload,
   CreateWorkflowPayload,
   UpdateWorkflowPayload,
   UpdateWorkflowStepsPayload,
   Workflow,
-  WorkflowConnexion,
   WorkflowState,
 } from "./types"
 
@@ -20,8 +18,6 @@ export interface WorkflowContextType extends WorkflowState {
     payload: UpdateWorkflowStepsPayload
   ) => Promise<void>
   updateWorkflow: (id: string, payload: UpdateWorkflowPayload) => Promise<void>
-  removeConnexion: (id: string) => Promise<void>
-  addConnexion: (payload: CreateConnexionPayload) => Promise<WorkflowConnexion>
 }
 
 export const WorkflowContext = createContext<WorkflowContextType | undefined>(

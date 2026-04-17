@@ -3,7 +3,7 @@
 import { useCallback, useReducer } from "react"
 import { getStep, putStep } from "./api"
 import { StepContext } from "./context"
-import { stepReducer } from "./reducer"
+import { StepReducer } from "./reducer"
 import { StepState, UpdateStepPayload } from "./types"
 
 const initialState: StepState = {
@@ -12,7 +12,7 @@ const initialState: StepState = {
 }
 
 export function StepProvider({ children }: { children: React.ReactNode }) {
-  const [state, dispatch] = useReducer(stepReducer, initialState)
+  const [state, dispatch] = useReducer(StepReducer, initialState)
 
   const fetchStep = useCallback(async (id: string) => {
     try {

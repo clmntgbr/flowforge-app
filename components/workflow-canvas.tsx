@@ -1,6 +1,6 @@
+import { useConnexion } from "@/lib/connexion/context"
 import type { Endpoint } from "@/lib/endpoint/types"
 import { Step } from "@/lib/step/types"
-import { useWorkflow } from "@/lib/workflow/context"
 import type { Workflow, WorkflowConnexion } from "@/lib/workflow/types"
 import {
   addEdge,
@@ -301,7 +301,7 @@ const WorkflowCanvas = forwardRef<WorkflowCanvasRef, WorkflowCanvasProps>(
     { workflow, onWorkflowChange, onStepSelect, onSave },
     ref
   ) {
-    const { addConnexion, removeConnexion } = useWorkflow()
+    const { addConnexion, removeConnexion } = useConnexion()
     const initialState = workflowToReactFlow(workflow)
     const [nodes, setNodes, onNodesChange] = useNodesState(initialState.nodes)
     const [edges, setEdges, onEdgesChange] = useEdgesState(initialState.edges)

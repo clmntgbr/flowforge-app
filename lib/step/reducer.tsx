@@ -1,6 +1,6 @@
 import { StepAction, StepState } from "./types"
 
-export const stepReducer = (
+export const StepReducer = (
   state: StepState,
   action: StepAction
 ): StepState => {
