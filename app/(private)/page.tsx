@@ -24,8 +24,7 @@ export default function Page() {
     activateOrganization,
   } = useOrganization()
 
-  const { endpoints, fetchEndpoints, createEndpoint, updateEndpoint } =
-    useEndpoint()
+  const { endpoints, createEndpoint } = useEndpoint()
 
   const handleCreateOrganization = () => {
     createOrganization({ name: crypto.randomUUID() })
@@ -34,9 +33,9 @@ export default function Page() {
   const handleCreateEndpoint = () => {
     createEndpoint({
       name: crypto.randomUUID(),
-      baseUri: crypto.randomUUID(),
-      path: crypto.randomUUID(),
-      method: crypto.randomUUID(),
+      baseUri: "https://api.example.com",
+      path: "/api/v1",
+      method: ["GET", "POST", "PUT", "DELETE"][Math.floor(Math.random() * 4)],
       timeout: 1000,
     })
   }
@@ -98,6 +97,22 @@ export default function Page() {
         </TabsContent>
         <TabsContent value="endpoints">
           <Button onClick={handleCreateEndpoint}>Create Endpoint</Button>
+          <h1>Endpoints</h1>
+          {endpoints.members.map((endpoint) => (
+            <Card key={endpoint.id} className="mb-4">
+              <CardHeader>
+                <CardTitle className="text-lg font-bold">
+                  name: {endpoint.name}
+                </CardTitle>
+                <CardDescription>baseUri: {endpoint.baseUri}</CardDescription>
+                <CardDescription>path: {endpoint.path}</CardDescription>
+                <CardDescription>method: {endpoint.method}</CardDescription>
+                <CardContent>
+                  <Badge>{endpoint.method}</Badge>
+                </CardContent>
+              </CardHeader>
+            </Card>
+          ))}
         </TabsContent>
       </Tabs>
     </>
