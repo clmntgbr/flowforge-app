@@ -20,11 +20,13 @@ export default function Page() {
   const {
     organizations,
     createOrganization,
+    fetchOrganization,
     updateOrganization,
     activateOrganization,
   } = useOrganization()
 
-  const { endpoints, createEndpoint } = useEndpoint()
+  const { endpoints, createEndpoint, updateEndpoint, fetchEndpoint } =
+    useEndpoint()
 
   const handleCreateOrganization = () => {
     createOrganization({ name: crypto.randomUUID() })
@@ -47,6 +49,24 @@ export default function Page() {
     updateOrganization(id, {
       name: crypto.randomUUID(),
       description: crypto.randomUUID(),
+    }).then(() => {
+      fetchOrganization(id)
+    })
+  }
+
+  const handleUpdateEndpoint = () => {
+    const endpoint =
+      endpoints.members[Math.floor(Math.random() * endpoints.members.length)]
+
+    if (!endpoint) return
+    updateEndpoint(endpoint.id, {
+      name: crypto.randomUUID(),
+      baseUri: endpoint.baseUri,
+      path: endpoint.path,
+      method: endpoint.method,
+      timeout: endpoint.timeout,
+    }).then(() => {
+      fetchEndpoint(endpoint.id)
     })
   }
 
@@ -97,12 +117,16 @@ export default function Page() {
         </TabsContent>
         <TabsContent value="endpoints">
           <Button onClick={handleCreateEndpoint}>Create Endpoint</Button>
+          <Button onClick={handleUpdateEndpoint}>Update Endpoint</Button>
           <h1>Endpoints</h1>
           {endpoints.members.map((endpoint) => (
             <Card key={endpoint.id} className="mb-4">
               <CardHeader>
                 <CardTitle className="text-lg font-bold">
+                  id: {endpoint.id}
+                  <br />
                   name: {endpoint.name}
+                  <br />
                 </CardTitle>
                 <CardDescription>baseUri: {endpoint.baseUri}</CardDescription>
                 <CardDescription>path: {endpoint.path}</CardDescription>

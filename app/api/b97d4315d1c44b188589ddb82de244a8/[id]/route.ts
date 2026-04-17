@@ -50,7 +50,6 @@ export async function PUT(
       return NextResponse.json({ success: false }, { status: response.status })
     }
 
-    await response.json()
     return NextResponse.json({ success: true })
   } catch {
     return NextResponse.json({ success: false }, { status: 500 })

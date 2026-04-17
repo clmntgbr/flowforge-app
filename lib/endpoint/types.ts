@@ -18,11 +18,11 @@ export interface CreateEndpointPayload {
 }
 
 export interface UpdateEndpointPayload {
-  name?: string
-  baseUri?: string
-  path?: string
-  method?: string
-  timeout?: number
+  name: string
+  baseUri: string
+  path: string
+  method: string
+  timeout: number
 }
 
 export interface EndpointState {
