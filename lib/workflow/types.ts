@@ -19,11 +19,11 @@ export interface WorkflowConnection {
 }
 
 export interface Workflow {
-  id?: string
+  id: string
   name: string
   description?: string
-  createdAt?: string
-  updatedAt?: string
+  createdAt: string
+  updatedAt: string
 }
 
 export interface CreateWorkflowPayload {
@@ -32,7 +32,6 @@ export interface CreateWorkflowPayload {
 }
 
 export interface UpdateWorkflowPayload {
-  id?: string
   name?: string
   description?: string
 }

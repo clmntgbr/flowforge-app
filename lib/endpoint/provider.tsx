@@ -7,13 +7,13 @@ import { EndpointContext } from "./context"
 import { EndpointReducer } from "./reducer"
 import {
   CreateEndpointPayload,
-  Endpoint,
   EndpointState,
+  MinimalEndpoint,
   UpdateEndpointPayload,
 } from "./types"
 
 const initialState: EndpointState = {
-  endpoints: initPaginate<Endpoint>(),
+  endpoints: initPaginate<MinimalEndpoint>(),
   isLoading: false,
   error: null,
 }

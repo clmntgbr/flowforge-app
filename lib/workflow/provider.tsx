@@ -2,10 +2,15 @@
 
 import { useCallback, useEffect, useReducer } from "react"
 import { initPaginate } from "../paginate"
-import { getWorkflow, getWorkflows, postWorkflow } from "./api"
+import { getWorkflow, getWorkflows, postWorkflow, putWorkflow } from "./api"
 import { WorkflowContext } from "./context"
 import { WorkflowReducer } from "./reducer"
-import { CreateWorkflowPayload, Workflow, WorkflowState } from "./types"
+import {
+  CreateWorkflowPayload,
+  UpdateWorkflowPayload,
+  Workflow,
+  WorkflowState,
+} from "./types"
 
 const initialState: WorkflowState = {
   workflows: initPaginate<Workflow>(),
@@ -55,6 +60,18 @@ export function WorkflowProvider({ children }: { children: React.ReactNode }) {
     [fetchWorkflows]
   )
 
+  const updateWorkflow = useCallback(
+    async (id: string, payload: UpdateWorkflowPayload) => {
+      try {
+        await putWorkflow(id, payload)
+        fetchWorkflows()
+      } catch {
+        throw new Error("Failed to update workflow")
+      }
+    },
+    [fetchWorkflows]
+  )
+
   useEffect(() => {
     fetchWorkflows()
   }, [fetchWorkflows])
@@ -66,6 +83,7 @@ export function WorkflowProvider({ children }: { children: React.ReactNode }) {
         fetchWorkflows,
         fetchWorkflow,
         createWorkflow,
+        updateWorkflow,
       }}
     >
       {children}

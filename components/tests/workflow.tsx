@@ -8,14 +8,25 @@ import {
   CardTitle,
 } from "@/components/ui/card"
 import { useWorkflow } from "@/lib/workflow/context"
+import { Workflow } from "@/lib/workflow/types"
 
 export default function WorkflowTest() {
-  const { workflows, createWorkflow, fetchWorkflow } = useWorkflow()
+  const { workflows, createWorkflow, fetchWorkflow, updateWorkflow } =
+    useWorkflow()
 
   const handleCreateWorkflow = () => {
     createWorkflow({
       name: crypto.randomUUID(),
       description: crypto.randomUUID(),
+    })
+  }
+
+  const handleUpdateWorkflow = (workflowId: string) => {
+    fetchWorkflow(workflowId).then((workflow: Workflow) => {
+      updateWorkflow(workflowId, {
+        name: crypto.randomUUID(),
+        description: workflow.description,
+      })
     })
   }
 
@@ -26,11 +37,17 @@ export default function WorkflowTest() {
         <Card key={workflow.id} className="mb-4">
           <CardHeader>
             <CardTitle className="text-lg font-bold">
-              title: {workflow.name}
+              id: {workflow.id}
+              <br />
+              name: {workflow.name}
+              <br />
             </CardTitle>
             <CardDescription>
               description: {workflow.description}
             </CardDescription>
+            <Button onClick={() => handleUpdateWorkflow(workflow.id)}>
+              Update Workflow
+            </Button>
           </CardHeader>
         </Card>
       ))}

@@ -1,7 +1,12 @@
 import { Paginate } from "../paginate"
-import { CreateEndpointPayload, Endpoint, UpdateEndpointPayload } from "./types"
+import {
+  CreateEndpointPayload,
+  Endpoint,
+  MinimalEndpoint,
+  UpdateEndpointPayload,
+} from "./types"
 
-export const getEndpoints = async (): Promise<Paginate<Endpoint>> => {
+export const getEndpoints = async (): Promise<Paginate<MinimalEndpoint>> => {
   const response = await fetch("/api/b97d4315d1c44b188589ddb82de244a8", {
     method: "GET",
   })

@@ -1,15 +1,9 @@
 "use client"
 
-import { Badge } from "@/components/ui/badge"
 import { Button } from "@/components/ui/button"
-import {
-  Card,
-  CardContent,
-  CardDescription,
-  CardHeader,
-  CardTitle,
-} from "@/components/ui/card"
+import { Card, CardHeader, CardTitle } from "@/components/ui/card"
 import { useEndpoint } from "@/lib/endpoint/context"
+import { Endpoint } from "@/lib/endpoint/types"
 
 export default function EndpointTest() {
   const { endpoints, createEndpoint, updateEndpoint, fetchEndpoint } =
@@ -25,26 +19,29 @@ export default function EndpointTest() {
     })
   }
 
-  const handleUpdateEndpoint = () => {
-    const endpoint =
-      endpoints.members[Math.floor(Math.random() * endpoints.members.length)]
-
-    if (!endpoint) return
-    updateEndpoint(endpoint.id, {
-      name: crypto.randomUUID(),
-      baseUri: endpoint.baseUri,
-      path: endpoint.path,
-      method: endpoint.method,
-      timeout: endpoint.timeout,
-    }).then(() => {
-      fetchEndpoint(endpoint.id)
+  const handleUpdateEndpoint = (endpointId: string) => {
+    fetchEndpoint(endpointId).then((endpoint: Endpoint) => {
+      console.log(endpoint)
+      console.log({
+        name: crypto.randomUUID(),
+        baseUri: endpoint.baseUri,
+        path: endpoint.path,
+        method: endpoint.method,
+        timeout: endpoint.timeout,
+      })
+      updateEndpoint(endpointId, {
+        name: crypto.randomUUID(),
+        baseUri: endpoint.baseUri,
+        path: endpoint.path,
+        method: endpoint.method,
+        timeout: endpoint.timeout,
+      })
     })
   }
 
   return (
     <>
       <Button onClick={handleCreateEndpoint}>Create Endpoint</Button>
-      <Button onClick={handleUpdateEndpoint}>Update Endpoint</Button>
       {endpoints.members.map((endpoint) => (
         <Card key={endpoint.id} className="mb-4">
           <CardHeader>
@@ -54,12 +51,9 @@ export default function EndpointTest() {
               name: {endpoint.name}
               <br />
             </CardTitle>
-            <CardDescription>baseUri: {endpoint.baseUri}</CardDescription>
-            <CardDescription>path: {endpoint.path}</CardDescription>
-            <CardDescription>method: {endpoint.method}</CardDescription>
-            <CardContent>
-              <Badge>{endpoint.method}</Badge>
-            </CardContent>
+            <Button onClick={() => handleUpdateEndpoint(endpoint.id)}>
+              Update Endpoint
+            </Button>
           </CardHeader>
         </Card>
       ))}

@@ -1,5 +1,5 @@
 import { Paginate } from "../paginate"
-import { CreateWorkflowPayload, Workflow } from "./types"
+import { CreateWorkflowPayload, UpdateWorkflowPayload, Workflow } from "./types"
 
 export const getWorkflows = async (): Promise<Paginate<Workflow>> => {
   const response = await fetch("/api/0cc345f76b884fd580c232f270c887da", {
@@ -35,6 +35,22 @@ export const postWorkflow = async (
 
   if (!response.ok) {
     throw new Error("Failed to create workflow")
+  }
+
+  return response.json()
+}
+
+export const putWorkflow = async (
+  id: string,
+  payload: UpdateWorkflowPayload
+): Promise<void> => {
+  const response = await fetch(`/api/0cc345f76b884fd580c232f270c887da/${id}`, {
+    method: "PUT",
+    body: JSON.stringify(payload),
+  })
+
+  if (!response.ok) {
+    throw new Error("Failed to update workflow")
   }
 
   return response.json()
