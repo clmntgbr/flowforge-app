@@ -44,9 +44,13 @@ export default function WorkflowIdPage() {
       if (!workflowData?.id) return
       await updateWorkflowSteps(workflowData.id, {
         steps: workflowData.steps ?? [],
+      }).then(() => {
+        fetchWorkflow(id as string).then((workflow) => {
+          setWorkflow(workflow)
+        })
       })
     },
-    [workflow, updateWorkflowSteps]
+    [workflow, updateWorkflowSteps, fetchWorkflow, id]
   )
 
   const handleStepUpdate = useCallback(async () => {

@@ -71,24 +71,22 @@ export function WorkflowProvider({ children }: { children: React.ReactNode }) {
     async (id: string, payload: UpdateWorkflowStepsPayload) => {
       try {
         await putWorkflowSteps(id, payload)
-        fetchWorkflows()
       } catch {
         throw new Error("Failed to update workflow")
       }
     },
-    [fetchWorkflows]
+    []
   )
 
   const updateWorkflow = useCallback(
     async (id: string, payload: UpdateWorkflowPayload) => {
       try {
         await putWorkflow(id, payload)
-        fetchWorkflows()
       } catch {
         throw new Error("Failed to update workflow")
       }
     },
-    [fetchWorkflows]
+    []
   )
 
   useEffect(() => {
