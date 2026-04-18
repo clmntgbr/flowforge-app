@@ -1,5 +1,5 @@
 import { Paginate } from "@/lib/paginate"
-import { Step } from "../step/types"
+import { Step, UpdateWorkflowStepPayload } from "../step/types"
 
 export interface WorkflowConnexion {
   id: string
@@ -33,7 +33,7 @@ export interface UpdateWorkflowPayload {
 }
 
 export interface UpdateWorkflowStepsPayload {
-  steps: Step[]
+  steps: UpdateWorkflowStepPayload[]
 }
 
 export interface CreateConnexionPayload {

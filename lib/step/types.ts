@@ -17,6 +17,14 @@ export interface Step {
   index?: string
 }
 
+export interface UpdateWorkflowStepPayload {
+  id: string
+  endpointId: string
+  endpoint: Endpoint
+  position: { x: number; y: number }
+  index?: string
+}
+
 export interface UpdateStepPayload {
   name?: string
   description?: string

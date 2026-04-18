@@ -4,7 +4,7 @@ import { EndpointsSidebar } from "@/components/endpoints-sidebar"
 import { Button } from "@/components/ui/button"
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs"
 import WorkflowCanvas, { WorkflowCanvasRef } from "@/components/workflow-canvas"
-import { Step } from "@/lib/step/types"
+import { Step, UpdateWorkflowStepPayload } from "@/lib/step/types"
 import { useWorkflow } from "@/lib/workflow/context"
 import { Workflow } from "@/lib/workflow/types"
 import { useParams } from "next/navigation"
@@ -43,7 +43,16 @@ export default function WorkflowIdPage() {
       const workflowData = workflowPayload ?? workflow
       if (!workflowData?.id) return
       await updateWorkflowSteps(workflowData.id, {
-        steps: workflowData.steps ?? [],
+        steps:
+          workflowData.steps?.map(
+            (step): UpdateWorkflowStepPayload => ({
+              id: step.id,
+              endpointId: step.endpointId,
+              endpoint: step.endpoint,
+              position: step.position,
+              index: step.index ?? "0",
+            })
+          ) ?? [],
       }).then(() => {
         fetchWorkflow(id as string).then((workflow) => {
           setWorkflow(workflow)
