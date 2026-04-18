@@ -57,12 +57,12 @@ export function StepDrawer({
   const [step, setStep] = useState<Step | undefined>(undefined)
 
   useEffect(() => {
-    if (stepId) {
+    if (stepId && isOpen) {
       fetchStep(stepId).then((step) => {
         setStep(step)
       })
     }
-  }, [stepId, fetchStep])
+  }, [stepId, isOpen, fetchStep])
 
   const {
     handleSubmit,
@@ -100,7 +100,9 @@ export function StepDrawer({
     e: React.MouseEvent<HTMLButtonElement>
   ) {
     e.preventDefault()
-    const newParams = safeArray<QueryParam>(currentParams).filter((p) => p.id !== id)
+    const newParams = safeArray<QueryParam>(currentParams).filter(
+      (p) => p.id !== id
+    )
     onChange(newParams)
   }
 
@@ -340,7 +342,12 @@ export function StepDrawer({
                                   variant="ghost"
                                   size="icon"
                                   onClick={(e) =>
-                                    removeParam(currentParams, field.onChange, param.id, e)
+                                    removeParam(
+                                      currentParams,
+                                      field.onChange,
+                                      param.id,
+                                      e
+                                    )
                                   }
                                   className="shrink-0 bg-red-50 text-red-500 transition-colors hover:bg-red-100 hover:text-red-500"
                                 >
@@ -352,7 +359,9 @@ export function StepDrawer({
                         )}
                         <div className="flex justify-center">
                           <Button
-                            onClick={(e) => addParam(currentParams, field.onChange, e)}
+                            onClick={(e) =>
+                              addParam(currentParams, field.onChange, e)
+                            }
                             variant="outline"
                             className="w-full font-light"
                           >
