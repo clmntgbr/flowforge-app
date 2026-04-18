@@ -1,8 +1,15 @@
 import { Paginate } from "@/lib/paginate"
 
+export interface QueryParam {
+  id: string
+  key: string
+  value: string
+}
+
 export interface Endpoint extends MinimalEndpoint {
   baseUri: string
   timeout: number
+  query: QueryParam[]
 }
 
 export interface MinimalEndpoint {
@@ -20,6 +27,7 @@ export interface CreateEndpointPayload {
   path: string
   method: string
   timeout: number
+  query: QueryParam[]
 }
 
 export interface UpdateEndpointPayload {
@@ -28,6 +36,7 @@ export interface UpdateEndpointPayload {
   path: string
   method: string
   timeout: number
+  query: QueryParam[]
 }
 
 export interface EndpointState {

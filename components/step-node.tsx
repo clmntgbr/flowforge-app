@@ -3,6 +3,7 @@ import {
   GetMethodCodeColor,
   GetMethodColor,
 } from "@/lib/method-color"
+import { useStep } from "@/lib/step/context"
 import { Step } from "@/lib/step/types"
 import { cn } from "@/lib/utils"
 import { Handle, Position, type NodeProps } from "@xyflow/react"
@@ -13,10 +14,15 @@ import { Button } from "./ui/button"
 import { Card } from "./ui/card"
 
 function StepNode({ data, selected }: NodeProps) {
+  const { fetchStep } = useStep()
+
   const step = data.step as Step
   const onEditClick = data.onEditClick as (() => void) | undefined
 
   const handleEditClick = (e: React.MouseEvent) => {
+    fetchStep(step.id).then((step) => {
+      console.log(step)
+    })
     e.stopPropagation()
     onEditClick?.()
   }

@@ -16,6 +16,7 @@ export default function EndpointTest() {
       path: "/api/v1",
       method: ["GET", "POST", "PUT", "DELETE"][Math.floor(Math.random() * 4)],
       timeout: 1000,
+      query: [],
     })
   }
 
@@ -27,6 +28,7 @@ export default function EndpointTest() {
         path: endpoint.path,
         method: endpoint.method,
         timeout: endpoint.timeout,
+        query: endpoint.query,
       })
     })
   }
