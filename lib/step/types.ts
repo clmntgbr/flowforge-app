@@ -13,6 +13,7 @@ export interface Step {
   timeout?: number
   endpointId: string
   endpoint: Endpoint
+  query: QueryParam[]
   position: { x: number; y: number }
   index?: string
 }
@@ -29,6 +30,7 @@ export interface UpdateStepPayload {
   name?: string
   description?: string
   timeout?: number
+  query?: QueryParam[]
 }
 
 export interface StepState {

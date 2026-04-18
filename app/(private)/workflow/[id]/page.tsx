@@ -1,6 +1,7 @@
 "use client"
 
 import { EndpointsSidebar } from "@/components/endpoints-sidebar"
+import { StepDrawer } from "@/components/step-drawer"
 import { Button } from "@/components/ui/button"
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs"
 import WorkflowCanvas, { WorkflowCanvasRef } from "@/components/workflow-canvas"
@@ -123,6 +124,12 @@ export default function WorkflowIdPage() {
               onSave={handleSave}
             />
           </div>
+          <StepDrawer
+            onUpdate={handleStepUpdate}
+            stepId={selectedStep?.id ?? undefined}
+            isOpen={isDrawerOpen}
+            onOpenChange={setIsDrawerOpen}
+          />
         </TabsContent>
         <TabsContent
           value="analytics"
