@@ -13,7 +13,7 @@ const initialState: ConnexionState = {
 }
 
 export function ConnexionProvider({ children }: { children: React.ReactNode }) {
-  const [state, dispatch] = useReducer(ConnexionReducer, initialState)
+  const [state] = useReducer(ConnexionReducer, initialState)
   const removeConnexion = useCallback(async (id: string) => {
     try {
       await deleteConnexion(id)

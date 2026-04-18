@@ -12,7 +12,7 @@ const initialState: StepState = {
 }
 
 export function StepProvider({ children }: { children: React.ReactNode }) {
-  const [state, dispatch] = useReducer(StepReducer, initialState)
+  const [state] = useReducer(StepReducer, initialState)
 
   const fetchStep = useCallback(async (id: string) => {
     try {
