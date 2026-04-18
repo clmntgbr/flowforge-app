@@ -4,8 +4,9 @@ import { EndpointsSidebar } from "@/components/endpoints-sidebar"
 import { Button } from "@/components/ui/button"
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs"
 import WorkflowCanvas, { WorkflowCanvasRef } from "@/components/workflow-canvas"
+import { Step } from "@/lib/step/types"
 import { useWorkflow } from "@/lib/workflow/context"
-import { Workflow, WorkflowStep } from "@/lib/workflow/types"
+import { Workflow } from "@/lib/workflow/types"
 import { useParams } from "next/navigation"
 import { useCallback, useEffect, useRef, useState } from "react"
 
@@ -15,7 +16,7 @@ export default function WorkflowIdPage() {
   const { id } = useParams()
 
   const { updateWorkflowSteps, fetchWorkflow } = useWorkflow()
-  const [selectedStep, setSelectedStep] = useState<WorkflowStep | null>(null)
+  const [selectedStep, setSelectedStep] = useState<Step | null>(null)
   const [isDrawerOpen, setIsDrawerOpen] = useState(false)
 
   const [workflow, setWorkflow] = useState<Workflow | null>(null)
@@ -30,7 +31,7 @@ export default function WorkflowIdPage() {
     setWorkflow(updatedWorkflow)
   }, [])
 
-  const handleStepSelect = useCallback((step: WorkflowStep | null) => {
+  const handleStepSelect = useCallback((step: Step | null) => {
     setSelectedStep(step)
     if (step) {
       setIsDrawerOpen(true)

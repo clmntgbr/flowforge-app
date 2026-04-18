@@ -39,8 +39,6 @@ import StepNode from "./step-node"
 
 const nodeTypes = { stepNode: StepNode }
 
-export type { Step, Workflow }
-
 export type WorkflowCanvasRef = object
 
 interface WorkflowCanvasProps {
