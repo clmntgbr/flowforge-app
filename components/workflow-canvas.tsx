@@ -276,6 +276,7 @@ function reactFlowToWorkflow(
       endpoint: step.endpoint,
       position: node.position,
       index: indexMap.get(node.id) || "0",
+      query: step.query,
     }
   })
 
@@ -349,6 +350,7 @@ const WorkflowCanvas = forwardRef<WorkflowCanvasRef, WorkflowCanvasProps>(
                   timeout: workflowStep.timeout,
                   endpoint: workflowStep.endpoint,
                   endpointId: workflowStep.endpointId,
+                  query: workflowStep.query,
                 },
               },
             }
@@ -428,6 +430,7 @@ const WorkflowCanvas = forwardRef<WorkflowCanvasRef, WorkflowCanvasProps>(
             endpoint: step.endpoint,
             position: node.position,
             index: indexMap.get(node.id) || "0",
+            query: step.query,
           }
           onStepSelect(workflowStep)
         }
@@ -581,6 +584,7 @@ const WorkflowCanvas = forwardRef<WorkflowCanvasRef, WorkflowCanvasProps>(
           endpoint,
           endpointId: endpoint.id,
           position,
+          query: [],
         }
 
         const newNode: Node = {

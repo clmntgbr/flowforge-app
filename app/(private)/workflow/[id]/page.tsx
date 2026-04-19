@@ -86,7 +86,7 @@ export default function WorkflowIdPage() {
   }
 
   return (
-    <div className="flex h-screen w-screen flex-col overflow-hidden">
+    <div className="flex h-full w-full flex-col overflow-hidden">
       <EndpointsSidebar />
       <Tabs
         defaultValue="overview"

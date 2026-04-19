@@ -25,8 +25,11 @@ export default function PrivateLayout({
             <WorkflowProvider>
               <StepProvider>
                 <ConnexionProvider>
-                  <SidebarProvider defaultOpen={false}>
-                    <div className="mx-auto px-0">{children}</div>
+                  <SidebarProvider
+                    defaultOpen={false}
+                    className="h-full min-h-0"
+                  >
+                    {children}
                   </SidebarProvider>
                 </ConnexionProvider>
               </StepProvider>

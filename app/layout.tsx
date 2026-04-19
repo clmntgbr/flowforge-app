@@ -40,26 +40,28 @@ export default function RootLayout({
         inter.variable
       )}
     >
-      <body>
+      <body className="h-screen overflow-hidden">
         <ClerkProvider>
           <ThemeProvider>
-            <header className="flex items-center justify-end gap-4 border-b p-4">
-              <SignedOut>
-                <>
-                  <SignInButton />
-                  <SignUpButton>
-                    <button className="h-10 cursor-pointer rounded-full bg-purple-700 px-4 text-sm font-medium text-white sm:h-12 sm:px-5 sm:text-base">
-                      Sign Up
-                    </button>
-                  </SignUpButton>
-                </>
-              </SignedOut>
-              <SignedIn>
-                <UserButton />
-                {/* <SignOutButton /> */}
-              </SignedIn>
-            </header>
-            {children}
+            <div className="flex h-screen flex-col">
+              <header className="flex h-[4.5rem] shrink-0 items-center justify-end gap-4 border-b p-4">
+                <SignedOut>
+                  <>
+                    <SignInButton />
+                    <SignUpButton>
+                      <button className="h-10 cursor-pointer rounded-full bg-purple-700 px-4 text-sm font-medium text-white sm:h-12 sm:px-5 sm:text-base">
+                        Sign Up
+                      </button>
+                    </SignUpButton>
+                  </>
+                </SignedOut>
+                <SignedIn>
+                  <UserButton />
+                  {/* <SignOutButton /> */}
+                </SignedIn>
+              </header>
+              <div className="min-h-0 flex-1 overflow-hidden">{children}</div>
+            </div>
           </ThemeProvider>
         </ClerkProvider>
       </body>
