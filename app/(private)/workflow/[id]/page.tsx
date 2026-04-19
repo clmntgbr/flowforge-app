@@ -5,6 +5,7 @@ import { StepDrawer } from "@/components/step-drawer"
 import { Button } from "@/components/ui/button"
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs"
 import WorkflowCanvas, { WorkflowCanvasRef } from "@/components/workflow-canvas"
+import { WorkflowDrawer } from "@/components/workflow-drawer"
 import { Step, UpdateWorkflowStepPayload } from "@/lib/step/types"
 import { useWorkflow } from "@/lib/workflow/context"
 import { Workflow } from "@/lib/workflow/types"
@@ -19,6 +20,7 @@ export default function WorkflowIdPage() {
   const { updateWorkflowSteps, fetchWorkflow } = useWorkflow()
   const [selectedStep, setSelectedStep] = useState<Step | null>(null)
   const [isDrawerOpen, setIsDrawerOpen] = useState(false)
+  const [isWorkflowDrawerOpen, setIsWorkflowDrawerOpen] = useState(false)
 
   const [workflow, setWorkflow] = useState<Workflow | null>(null)
 
@@ -28,9 +30,14 @@ export default function WorkflowIdPage() {
     })
   }, [fetchWorkflow, id])
 
-  const handleWorkflowChange = useCallback((updatedWorkflow: Workflow) => {
-    setWorkflow(updatedWorkflow)
-  }, [])
+  const handleWorkflowChange = useCallback(
+    (updatedWorkflow: Workflow) => {
+      fetchWorkflow(updatedWorkflow.id).then((workflow) => {
+        setWorkflow(workflow)
+      })
+    },
+    [fetchWorkflow]
+  )
 
   const handleStepSelect = useCallback((step: Step | null) => {
     setSelectedStep(step)
@@ -108,7 +115,9 @@ export default function WorkflowIdPage() {
             <TabsTrigger value="analytics">Analytics</TabsTrigger>
           </TabsList>
           <div className="flex min-w-0 flex-1 justify-end">
-            <Button type="button">Settings</Button>
+            <Button type="button" onClick={() => setIsWorkflowDrawerOpen(true)}>
+              Settings
+            </Button>
           </div>
         </header>
         <TabsContent
@@ -129,6 +138,12 @@ export default function WorkflowIdPage() {
             stepId={selectedStep?.id ?? undefined}
             isOpen={isDrawerOpen}
             onOpenChange={setIsDrawerOpen}
+          />
+          <WorkflowDrawer
+            workflow={workflow}
+            isOpen={isWorkflowDrawerOpen}
+            onOpenChange={setIsWorkflowDrawerOpen}
+            onUpdate={handleWorkflowChange}
           />
         </TabsContent>
         <TabsContent
