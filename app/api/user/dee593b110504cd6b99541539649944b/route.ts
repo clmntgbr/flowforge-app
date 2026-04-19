@@ -15,11 +15,14 @@ export async function GET() {
     })
 
     if (!response.ok) {
-      return NextResponse.json({ success: false }, { status: response.status })
+      return NextResponse.json(
+        { success: false, data: await response.json() },
+        { status: response.status }
+      )
     }
 
-    return NextResponse.json(await response.json())
+    return NextResponse.json({ success: true, data: await response.json() })
   } catch {
-    return NextResponse.json({ success: false }, { status: 500 })
+    return NextResponse.json({ success: false, data: null }, { status: 500 })
   }
 }

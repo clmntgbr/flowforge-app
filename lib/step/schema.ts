@@ -8,6 +8,9 @@ export const stepConfigurationSchema = z.object({
   description: z.string().optional(),
   endpointId: z.string().min(1, "Endpoint is required"),
   timeout: z.number().min(0, "Timeout is required"),
+  retryOnFailure: z.boolean().default(false),
+  retryCount: z.number().min(0, "Retry count is required"),
+  retryDelay: z.number().min(0, "Retry delay is required"),
 })
 
 export const stepQuerySchema = z.object({

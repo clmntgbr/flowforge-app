@@ -23,7 +23,7 @@ export async function DELETE(
       return NextResponse.json({ success: false }, { status: response.status })
     }
 
-    return NextResponse.json({ success: true })
+    return NextResponse.json({ success: true, data: await response.json() })
   } catch {
     return NextResponse.json({ success: false }, { status: 500 })
   }

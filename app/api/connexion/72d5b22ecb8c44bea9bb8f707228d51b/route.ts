@@ -18,7 +18,10 @@ export async function POST(request: NextRequest) {
     })
 
     if (!response.ok) {
-      return NextResponse.json({ success: false }, { status: response.status })
+      return NextResponse.json(
+        { success: false, data: await response.json() },
+        { status: response.status }
+      )
     }
 
     return NextResponse.json(await response.json())

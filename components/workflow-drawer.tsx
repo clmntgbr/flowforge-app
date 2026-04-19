@@ -18,6 +18,7 @@ import { useEffect, useState } from "react"
 import { Controller, useForm } from "react-hook-form"
 import z from "zod"
 import CustomInput from "./custom-input"
+import CustomTextarea from "./custom-textarea"
 import { Field } from "./ui/field"
 
 interface WorkflowDrawerProps {
@@ -129,15 +130,14 @@ export function WorkflowDrawer({
                 name="description"
                 control={control}
                 render={({ field }) => (
-                  <CustomInput
+                  <CustomTextarea
                     id="input-field-description"
-                    isRequired={true}
+                    isRequired={false}
                     label="Description"
-                    hasError={!!errors.description}
                     description="The description of the workflow"
                     value={field.value ?? ""}
                     hasCharacterLimit={true}
-                    maxLength={100}
+                    maxLength={255}
                     onChange={(value) => field.onChange(value)}
                   />
                 )}

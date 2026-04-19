@@ -17,6 +17,9 @@ export default function EndpointTest() {
       method: ["GET", "POST", "PUT", "DELETE"][Math.floor(Math.random() * 4)],
       timeout: 1000,
       query: [],
+      retryOnFailure: Math.random() < 0.5,
+      retryCount: Math.floor(Math.random() * 10) + 1,
+      retryDelay: Math.floor(Math.random() * 1000) + 1000,
     })
   }
 
@@ -29,6 +32,9 @@ export default function EndpointTest() {
         method: endpoint.method,
         timeout: endpoint.timeout,
         query: endpoint.query,
+        retryOnFailure: endpoint.retryOnFailure,
+        retryCount: endpoint.retryCount,
+        retryDelay: endpoint.retryDelay,
       })
     })
   }

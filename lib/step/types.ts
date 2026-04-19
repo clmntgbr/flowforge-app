@@ -16,6 +16,9 @@ export interface Step {
   query: QueryParam[]
   position: { x: number; y: number }
   index?: string
+  retryOnFailure: boolean
+  retryCount: number
+  retryDelay: number
 }
 
 export interface UpdateWorkflowStepPayload {
@@ -31,6 +34,9 @@ export interface UpdateStepPayload {
   description?: string
   timeout?: number
   query?: QueryParam[]
+  retryOnFailure: boolean
+  retryCount: number
+  retryDelay: number
 }
 
 export interface StepState {

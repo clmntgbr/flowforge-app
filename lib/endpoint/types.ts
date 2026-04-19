@@ -10,6 +10,9 @@ export interface Endpoint extends MinimalEndpoint {
   baseUri: string
   timeout: number
   query: QueryParam[]
+  retryOnFailure: boolean
+  retryCount: number
+  retryDelay: number
 }
 
 export interface MinimalEndpoint {
@@ -28,6 +31,9 @@ export interface CreateEndpointPayload {
   method: string
   timeout: number
   query: QueryParam[]
+  retryOnFailure: boolean
+  retryCount: number
+  retryDelay: number
 }
 
 export interface UpdateEndpointPayload {
@@ -37,6 +43,9 @@ export interface UpdateEndpointPayload {
   method: string
   timeout: number
   query: QueryParam[]
+  retryOnFailure: boolean
+  retryCount: number
+  retryDelay: number
 }
 
 export interface EndpointState {
