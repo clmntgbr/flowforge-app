@@ -20,10 +20,13 @@ export async function DELETE(
     })
 
     if (!response.ok) {
-      return NextResponse.json({ success: false }, { status: response.status })
+      return NextResponse.json(
+        { success: false, data: await response.json() },
+        { status: response.status }
+      )
     }
 
-    return NextResponse.json({ success: true, data: await response.json() })
+    return NextResponse.json(await response.json())
   } catch {
     return NextResponse.json({ success: false }, { status: 500 })
   }

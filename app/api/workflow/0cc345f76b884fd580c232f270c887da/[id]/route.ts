@@ -26,7 +26,7 @@ export async function GET(
       )
     }
 
-    return NextResponse.json({ success: true, data: await response.json() })
+    return NextResponse.json(await response.json())
   } catch {
     return NextResponse.json({ success: false, data: null }, { status: 500 })
   }
@@ -56,7 +56,7 @@ export async function PUT(
       )
     }
 
-    return NextResponse.json({ success: true, data: await response.json() })
+    return NextResponse.json(await response.json())
   } catch {
     return NextResponse.json({ success: false, data: null }, { status: 500 })
   }

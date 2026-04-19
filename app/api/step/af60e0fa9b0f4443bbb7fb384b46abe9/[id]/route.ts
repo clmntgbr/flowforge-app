@@ -40,6 +40,8 @@ export async function PUT(
     const { id } = await params
     const payload = await request.json()
 
+    console.log(payload)
+
     const response = await fetch(`${BACKEND_API_URL}/api/steps/${id}`, {
       method: "PUT",
       headers: createAuthHeaders(auth.token),
@@ -53,7 +55,7 @@ export async function PUT(
       )
     }
 
-    return NextResponse.json({ success: true, data: await response.json() })
+    return NextResponse.json(await response.json())
   } catch {
     return NextResponse.json({ success: false }, { status: 500 })
   }
