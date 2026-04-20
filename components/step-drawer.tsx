@@ -25,12 +25,11 @@ import { v7 as uuidv7 } from "uuid"
 import z from "zod"
 import CustomInput from "./custom-input"
 import CustomInputNumber from "./custom-input-number"
+import CustomSwitch from "./custom-switch"
 import CustomTextarea from "./custom-textarea"
 import { Badge } from "./ui/badge"
-import { Field, FieldDescription } from "./ui/field"
+import { Field } from "./ui/field"
 import { Input } from "./ui/input"
-import { Label } from "./ui/label"
-import { Switch } from "./ui/switch"
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "./ui/tabs"
 
 interface StepDrawerProps {
@@ -247,6 +246,7 @@ export function StepDrawer({
                             isRequired={true}
                             label="Name"
                             hasError={!!errors.name}
+                            errorMessage={errors.name?.message}
                             description="The name of the step"
                             value={field.value ?? ""}
                             hasCharacterLimit={true}
@@ -263,6 +263,8 @@ export function StepDrawer({
                         render={({ field }) => (
                           <CustomTextarea
                             id="input-field-description"
+                            hasError={!!errors.description}
+                            errorMessage={errors.description?.message}
                             isRequired={false}
                             label="Description"
                             description="The description of the step"
@@ -285,6 +287,8 @@ export function StepDrawer({
                             label="Timeout"
                             description="The timeout of the step in seconds"
                             value={field.value?.toString() ?? "0"}
+                            hasError={!!errors.timeout}
+                            errorMessage={errors.timeout?.message}
                             onChange={(value) => field.onChange(Number(value))}
                           />
                         )}
@@ -295,28 +299,16 @@ export function StepDrawer({
                         name="retryOnFailure"
                         control={control}
                         render={({ field }) => (
-                          <>
-                            <Label
-                              htmlFor="switch-field-retry-on-failure"
-                              className="mb-1 block font-semibold"
-                            >
-                              Retry On Failure
-                            </Label>
-                            <Switch
-                              id="switch-field-retry-on-failure"
-                              checked={field.value}
-                              onCheckedChange={field.onChange}
-                            />
-                            <div className="flex w-full flex-row items-start justify-between gap-2">
-                              <FieldDescription
-                                className={cn(
-                                  "text-begin min-w-0 flex-1 text-xs text-muted-foreground"
-                                )}
-                              >
-                                The step will be retried if it fails
-                              </FieldDescription>
-                            </div>
-                          </>
+                          <CustomSwitch
+                            id="switch-field-retry-on-failure"
+                            isRequired={true}
+                            label="Retry On Failure"
+                            description="The step will be retried if it fails"
+                            value={field.value}
+                            hasError={!!errors.retryOnFailure}
+                            errorMessage={errors.retryOnFailure?.message}
+                            onChange={(value) => field.onChange(value)}
+                          />
                         )}
                       />
                     </Field>
@@ -327,6 +319,8 @@ export function StepDrawer({
                         render={({ field }) => (
                           <CustomInputNumber
                             id="input-field-retry-count"
+                            hasError={!!errors.retryCount}
+                            errorMessage={errors.retryCount?.message}
                             isRequired={true}
                             label="Retry Count"
                             description="The number of times to retry the step if it fails"
@@ -343,6 +337,8 @@ export function StepDrawer({
                         render={({ field }) => (
                           <CustomInputNumber
                             id="input-field-retry-delay"
+                            hasError={!!errors.retryDelay}
+                            errorMessage={errors.retryDelay?.message}
                             isRequired={true}
                             label="Retry Delay"
                             description="The delay between retries in seconds"

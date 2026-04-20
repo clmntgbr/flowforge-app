@@ -11,6 +11,7 @@ interface InputOverlappingLabelProps {
   label: string
   description: string
   value: string
+  errorMessage?: string
   onChange: (value: number) => void
   hasError?: boolean
 }
@@ -21,6 +22,7 @@ const CustomInputNumber = ({
   label,
   description,
   value,
+  errorMessage,
   onChange,
   hasError = false,
 }: InputOverlappingLabelProps) => {
@@ -91,7 +93,7 @@ const CustomInputNumber = ({
               "text-red-500 focus-visible:border-red-500 focus-visible:ring-red-500/30"
           )}
         >
-          {description}
+          {hasError ? errorMessage : description}
         </FieldDescription>
       </div>
     </div>

@@ -7,10 +7,19 @@ export const stepConfigurationSchema = z.object({
     .max(50, "Name must be at most 50 characters"),
   description: z.string().optional(),
   endpointId: z.string().min(1, "Endpoint is required"),
-  timeout: z.number().min(0, "Timeout is required"),
+  timeout: z
+    .number()
+    .min(0, "Timeout is required")
+    .max(60, "Timeout must be less than 60 seconds"),
   retryOnFailure: z.boolean(),
-  retryCount: z.number().min(0, "Retry count is required"),
-  retryDelay: z.number().min(0, "Retry delay is required"),
+  retryCount: z
+    .number()
+    .min(0, "Retry count is required")
+    .max(10, "Retry count must be less than 10"),
+  retryDelay: z
+    .number()
+    .min(0, "Retry delay is required")
+    .max(600, "Retry delay must be less than 10 minutes (600 seconds)"),
 })
 
 export const stepQuerySchema = z.object({

@@ -12,6 +12,7 @@ interface InputOverlappingLabelProps {
   value: string
   maxLength?: number
   hasCharacterLimit?: boolean
+  errorMessage?: string
   hasError?: boolean
   onChange: (value: string) => void
 }
@@ -23,6 +24,7 @@ const CustomInput = ({
   description,
   value,
   maxLength = 0,
+  errorMessage,
   onChange,
   hasCharacterLimit = false,
   hasError = false,
@@ -64,7 +66,7 @@ const CustomInput = ({
                 "text-red-500 focus-visible:border-red-500 focus-visible:ring-red-500/30"
             )}
           >
-            {description}
+            {hasError ? errorMessage : description}
           </FieldDescription>
           {hasCharacterLimit && (
             <FieldDescription className="min-w-0 flex-1 text-end text-xs text-muted-foreground">

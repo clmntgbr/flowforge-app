@@ -13,15 +13,15 @@ export const GetMethodColor = (method: string) => {
 
 export const GetMethodCardColor = (method: string) => {
   const colors: Record<string, string> = {
-    GET: "bg-blue-100/20 border-blue-700/20 border-2 ring-blue-700/20 ring-1",
-    POST: "bg-green-100/20 border-green-700/20 border-2 ring-green-700/20 ring-1",
-    PUT: "bg-amber-100/20 border-amber-700/20 border-2 ring-amber-700/20 ring-1",
-    DELETE: "bg-red-100/20 border-red-700/20 border-2 ring-red-700/20 ring-1",
+    GET: "bg-blue-100 border-blue-700/20 border-2 ring-blue-700/20 ring-1",
+    POST: "bg-green-50 border-green-700/20 border-2 ring-green-700/20 ring-1",
+    PUT: "bg-amber-50 border-amber-700/20 border-2 ring-amber-700/20 ring-1",
+    DELETE: "bg-red-50 border-red-700/20 border-2 ring-red-700/20 ring-1",
     PATCH:
-      "bg-purple-100/20 border-purple-700/20 border-2 ring-purple-700/20 ring-1",
-    HEAD: "bg-blue-100/20 border-blue-700/20 border-2 ring-blue-700/20 ring-1",
+      "bg-purple-50 border-purple-700/20 border-2 ring-purple-700/20 ring-1",
+    HEAD: "bg-blue-50 border-blue-700/20 border-2 ring-blue-700/20 ring-1",
     OPTIONS:
-      "bg-purple-100/20 border-purple-700/20 border-2 ring-purple-700/20 ring-1",
+      "bg-purple-50 border-purple-700/20 border-2 ring-purple-700/20 ring-1",
   }
   return (
     colors[method] ||

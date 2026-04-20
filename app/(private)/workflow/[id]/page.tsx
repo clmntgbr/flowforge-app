@@ -30,14 +30,9 @@ export default function WorkflowIdPage() {
     })
   }, [fetchWorkflow, id])
 
-  const handleWorkflowChange = useCallback(
-    (updatedWorkflow: Workflow) => {
-      fetchWorkflow(updatedWorkflow.id).then((workflow) => {
-        setWorkflow(workflow)
-      })
-    },
-    [fetchWorkflow]
-  )
+  const handleWorkflowChange = useCallback((updatedWorkflow: Workflow) => {
+    setWorkflow(updatedWorkflow)
+  }, [])
 
   const handleStepSelect = useCallback((step: Step | null) => {
     setSelectedStep(step)
@@ -61,13 +56,9 @@ export default function WorkflowIdPage() {
               index: step.index ?? "0",
             })
           ) ?? [],
-      }).then(() => {
-        fetchWorkflow(id as string).then((workflow) => {
-          setWorkflow(workflow)
-        })
       })
     },
-    [workflow, updateWorkflowSteps, fetchWorkflow, id]
+    [workflow, updateWorkflowSteps]
   )
 
   const handleStepUpdate = useCallback(async () => {

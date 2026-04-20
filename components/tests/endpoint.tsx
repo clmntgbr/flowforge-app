@@ -15,11 +15,11 @@ export default function EndpointTest() {
       baseUri: "https://api.example.com",
       path: "/api/v1",
       method: ["GET", "POST", "PUT", "DELETE"][Math.floor(Math.random() * 4)],
-      timeout: 1000,
+      timeout: 10,
       query: [],
       retryOnFailure: Math.random() < 0.5,
       retryCount: Math.floor(Math.random() * 10) + 1,
-      retryDelay: Math.floor(Math.random() * 1000) + 1000,
+      retryDelay: Math.floor(Math.random() * 60) + 1,
     })
   }
 
