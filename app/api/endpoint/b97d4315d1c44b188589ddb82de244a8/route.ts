@@ -34,8 +34,6 @@ export async function POST(request: NextRequest) {
 
     const payload = await request.json()
 
-    console.log(payload)
-
     const response = await fetch(`${BACKEND_API_URL}/api/endpoints`, {
       method: "POST",
       headers: createAuthHeaders(auth.token),

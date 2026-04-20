@@ -40,8 +40,6 @@ export async function PUT(
     const { id } = await params
     const payload = await request.json()
 
-    console.log(payload)
-
     const response = await fetch(`${BACKEND_API_URL}/api/steps/${id}`, {
       method: "PUT",
       headers: createAuthHeaders(auth.token),
