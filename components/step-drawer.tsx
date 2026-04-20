@@ -9,13 +9,15 @@ import {
   DrawerHeader,
   DrawerTitle,
 } from "@/components/ui/drawer"
+import type { HeaderParam, QueryParam } from "@/lib/endpoint/types"
 import { useStep } from "@/lib/step/context"
 import {
   stepConfigurationSchema,
+  stepHeaderSchema,
   stepQuerySchema,
   stepSchema,
 } from "@/lib/step/schema"
-import type { QueryParam, Step } from "@/lib/step/types"
+import type { Step } from "@/lib/step/types"
 import { cn } from "@/lib/utils"
 import { zodResolver } from "@hookform/resolvers/zod"
 import { LinkIcon, PlusIcon, Trash2Icon } from "lucide-react"
@@ -78,6 +80,7 @@ export function StepDrawer({
       endpointId: step?.endpointId,
       timeout: step?.timeout,
       query: safeArray<QueryParam>(step?.query),
+      header: safeArray<HeaderParam>(step?.header),
       retryOnFailure: step?.retryOnFailure ?? false,
       retryCount: step?.retryCount ?? 0,
       retryDelay: step?.retryDelay ?? 0,
@@ -129,12 +132,14 @@ export function StepDrawer({
     ["name", "description", "endpointId", "timeout"]
 
   const queryFields: (keyof z.infer<typeof stepQuerySchema>)[] = ["query"]
+  const headerFields: (keyof z.infer<typeof stepHeaderSchema>)[] = ["header"]
 
   const configurationErrorCount = configurationFields.filter(
     (field) => errors[field]
   ).length
 
   const queryErrorCount = queryFields.filter((field) => errors[field]).length
+  const headerErrorCount = headerFields.filter((field) => errors[field]).length
 
   const onSubmit = async (data: z.infer<typeof stepSchema>) => {
     if (!step) return
@@ -144,6 +149,7 @@ export function StepDrawer({
       name: data.name,
       description: data.description,
       query: data.query,
+      header: data.header,
       timeout: data.timeout,
       retryOnFailure: data.retryOnFailure,
       retryCount: data.retryCount,
@@ -162,20 +168,20 @@ export function StepDrawer({
   useEffect(() => {
     if (isOpen && step) {
       const safeQuery = safeArray<QueryParam>(step.query)
+      const safeHeader = safeArray<HeaderParam>(step.header)
       reset({
         name: step.name,
         description: step.description,
         endpointId: step.endpointId,
         timeout: step.timeout,
         query: safeQuery,
+        header: safeHeader,
         retryOnFailure: step.retryOnFailure,
         retryCount: step.retryCount,
         retryDelay: step.retryDelay,
       })
     }
   }, [isOpen, step, reset])
-
-  if (!step) return null
 
   return (
     <Drawer open={isOpen} onOpenChange={onOpenChange} direction="right">
@@ -228,6 +234,20 @@ export function StepDrawer({
                       variant="destructive"
                     >
                       {queryErrorCount}
+                    </Badge>
+                  )}
+                </TabsTrigger>
+                <TabsTrigger
+                  value="headers"
+                  className="flex w-full items-center gap-1 px-2.5 sm:px-3"
+                >
+                  Header
+                  {headerErrorCount > 0 && (
+                    <Badge
+                      className="h-5 min-w-5 px-1 tabular-nums"
+                      variant="destructive"
+                    >
+                      {headerErrorCount}
                     </Badge>
                   )}
                 </TabsTrigger>
@@ -443,6 +463,10 @@ export function StepDrawer({
                   }}
                 />
               </TabsContent>
+              <TabsContent
+                value="headers"
+                className="w-full px-4 pt-2"
+              ></TabsContent>
             </Tabs>
           </div>
 

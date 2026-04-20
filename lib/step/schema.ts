@@ -32,7 +32,18 @@ export const stepQuerySchema = z.object({
   ),
 })
 
+export const stepHeaderSchema = z.object({
+  header: z.array(
+    z.object({
+      id: z.string(),
+      key: z.string().min(1, "Key is required"),
+      value: z.string().min(1, "Value is required"),
+    })
+  ),
+})
+
 export const stepSchema = z.object({
   ...stepConfigurationSchema.shape,
   ...stepQuerySchema.shape,
+  ...stepHeaderSchema.shape,
 })
