@@ -1,4 +1,5 @@
-import { Endpoint, HeaderParam, QueryParam } from "../endpoint/types"
+import { Endpoint } from "../endpoint/types"
+import { BodyParam, HeaderParam, QueryParam } from "../param"
 
 export interface Step {
   id: string
@@ -9,6 +10,7 @@ export interface Step {
   endpoint: Endpoint
   query: QueryParam[]
   header: HeaderParam[]
+  body: BodyParam
   position: { x: number; y: number }
   index?: string
   retryOnFailure: boolean
@@ -30,6 +32,7 @@ export interface UpdateStepPayload {
   timeout?: number
   query?: QueryParam[]
   header?: HeaderParam[]
+  body?: BodyParam
   retryOnFailure: boolean
   retryCount: number
   retryDelay: number

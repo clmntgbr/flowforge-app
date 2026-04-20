@@ -9,7 +9,7 @@ import {
   DrawerHeader,
   DrawerTitle,
 } from "@/components/ui/drawer"
-import type { HeaderParam, QueryParam } from "@/lib/endpoint/types"
+import type { HeaderParam, QueryParam } from "@/lib/param"
 import { useStep } from "@/lib/step/context"
 import {
   stepConfigurationSchema,

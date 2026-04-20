@@ -1,19 +1,12 @@
 import { Paginate } from "@/lib/paginate"
-
-export type Param = {
-  id: string
-  key: string
-  value: string
-}
-
-export type QueryParam = Param
-export type HeaderParam = Param
+import { BodyParam, HeaderParam, QueryParam } from "../param"
 
 export interface Endpoint extends MinimalEndpoint {
   baseUri: string
   timeout: number
   query: QueryParam[]
   header: HeaderParam[]
+  body: BodyParam
   retryOnFailure: boolean
   retryCount: number
   retryDelay: number
@@ -36,6 +29,7 @@ export interface CreateEndpointPayload {
   timeout: number
   query: QueryParam[]
   header: HeaderParam[]
+  body: BodyParam
   retryOnFailure: boolean
   retryCount: number
   retryDelay: number
@@ -49,6 +43,7 @@ export interface UpdateEndpointPayload {
   timeout: number
   query: QueryParam[]
   header: HeaderParam[]
+  body: BodyParam
   retryOnFailure: boolean
   retryCount: number
   retryDelay: number
