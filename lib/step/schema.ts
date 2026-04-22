@@ -1,16 +1,4 @@
 import * as z from "zod"
-import type { JsonValue } from "../param"
-
-const jsonValueSchema: z.ZodType<JsonValue> = z.lazy(() =>
-  z.union([
-    z.string(),
-    z.number(),
-    z.boolean(),
-    z.null(),
-    z.array(jsonValueSchema),
-    z.record(z.string(), jsonValueSchema),
-  ])
-)
 
 export const stepConfigurationSchema = z.object({
   name: z
@@ -55,7 +43,7 @@ export const stepHeaderSchema = z.object({
 })
 
 export const stepBodySchema = z.object({
-  body: jsonValueSchema.optional(),
+  body: z.unknown().optional(),
 })
 
 export const stepSchema = z.object({

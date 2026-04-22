@@ -44,7 +44,7 @@ export default function RootLayout({
         <ClerkProvider>
           <ThemeProvider>
             <div className="flex h-screen flex-col">
-              <header className="flex h-[4.5rem] shrink-0 items-center justify-end gap-4 border-b p-4">
+              <header className="flex h-18 shrink-0 items-center justify-end gap-4 border-b p-4">
                 <SignedOut>
                   <>
                     <SignInButton />

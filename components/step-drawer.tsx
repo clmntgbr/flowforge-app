@@ -9,7 +9,7 @@ import {
   DrawerHeader,
   DrawerTitle,
 } from "@/components/ui/drawer"
-import type { HeaderParam, QueryParam } from "@/lib/param"
+import type { BodyParam, HeaderParam, QueryParam } from "@/lib/param"
 import { useStep } from "@/lib/step/context"
 import {
   stepConfigurationSchema,
@@ -154,7 +154,7 @@ export function StepDrawer({
       description: data.description,
       query: data.query,
       header: data.header,
-      body: data.body,
+      body: data.body as BodyParam | undefined,
       timeout: data.timeout,
       retryOnFailure: data.retryOnFailure,
       retryCount: data.retryCount,
