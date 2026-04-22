@@ -42,8 +42,20 @@ export const stepHeaderSchema = z.object({
   ),
 })
 
+export const stepBodySchema = z.object({
+  body: z.string().transform((val, ctx) => {
+    try {
+      return JSON.parse(val)
+    } catch {
+      ctx.addIssue({ code: z.ZodIssueCode.custom, message: "Invalid JSON" })
+      return z.NEVER
+    }
+  }),
+})
+
 export const stepSchema = z.object({
   ...stepConfigurationSchema.shape,
   ...stepQuerySchema.shape,
   ...stepHeaderSchema.shape,
+  ...stepBodySchema.shape,
 })
