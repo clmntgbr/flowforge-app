@@ -1,5 +1,6 @@
 "use client"
 
+import CustomSwitch from "@/components/custom-switch"
 import { EndpointsSidebar } from "@/components/endpoints-sidebar"
 import { StepDrawer } from "@/components/step-drawer"
 import { Badge } from "@/components/ui/badge"
@@ -18,7 +19,12 @@ export default function WorkflowIdPage() {
 
   const { id } = useParams()
 
-  const { updateWorkflowSteps, fetchWorkflow } = useWorkflow()
+  const {
+    updateWorkflowSteps,
+    fetchWorkflow,
+    activateWorkflow,
+    deactivateWorkflow,
+  } = useWorkflow()
   const [selectedStep, setSelectedStep] = useState<Step | null>(null)
   const [isDrawerOpen, setIsDrawerOpen] = useState(false)
   const [isWorkflowDrawerOpen, setIsWorkflowDrawerOpen] = useState(false)
@@ -99,31 +105,29 @@ export default function WorkflowIdPage() {
         <header className="flex shrink-0 items-center gap-3 border-b border-border bg-background px-4 py-3">
           <div className="flex min-w-0 flex-1 items-center justify-start gap-6">
             <div className="min-w-0">
-              <h1 className="truncate text-lg font-semibold">
+              <h1 className="flex items-center gap-2 truncate text-lg font-semibold">
                 {workflow.name}
+                {workflow.isActive ? (
+                  <Badge className="border-none bg-green-600/10 text-green-600 focus-visible:ring-green-600/20 focus-visible:outline-none dark:bg-green-400/10 dark:text-green-400 dark:focus-visible:ring-green-400/40 [a&]:hover:bg-green-600/5 dark:[a&]:hover:bg-green-400/5">
+                    <span
+                      className="size-1.5 rounded-full bg-green-600 dark:bg-green-400"
+                      aria-hidden="true"
+                    />
+                    Active
+                  </Badge>
+                ) : (
+                  <Badge className="border-none bg-amber-600/10 text-amber-600 focus-visible:ring-amber-600/20 focus-visible:outline-none dark:bg-amber-400/10 dark:text-amber-400 dark:focus-visible:ring-amber-400/40 [a&]:hover:bg-amber-600/5 dark:[a&]:hover:bg-amber-400/5">
+                    <span
+                      className="size-1.5 rounded-full bg-amber-600 dark:bg-amber-400"
+                      aria-hidden="true"
+                    />
+                    Inactive
+                  </Badge>
+                )}
               </h1>
-              <p className="truncate text-xs leading-5 text-muted-foreground">
-                {workflow.description?.trim()}
+              <p className="min-h-5 truncate text-xs leading-5 text-muted-foreground">
+                {workflow.description?.trim() || "\u00a0"}
               </p>
-            </div>
-            <div className="shrink-0">
-              {workflow.isActive ? (
-                <Badge className="border-none bg-green-600/10 text-green-600 focus-visible:ring-green-600/20 focus-visible:outline-none dark:bg-green-400/10 dark:text-green-400 dark:focus-visible:ring-green-400/40 [a&]:hover:bg-green-600/5 dark:[a&]:hover:bg-green-400/5">
-                  <span
-                    className="size-1.5 rounded-full bg-green-600 dark:bg-green-400"
-                    aria-hidden="true"
-                  />
-                  Active
-                </Badge>
-              ) : (
-                <Badge className="border-none bg-amber-600/10 text-amber-600 focus-visible:ring-amber-600/20 focus-visible:outline-none dark:bg-amber-400/10 dark:text-amber-400 dark:focus-visible:ring-amber-400/40 [a&]:hover:bg-amber-600/5 dark:[a&]:hover:bg-amber-400/5">
-                  <span
-                    className="size-1.5 rounded-full bg-amber-600 dark:bg-amber-400"
-                    aria-hidden="true"
-                  />
-                  Inactive
-                </Badge>
-              )}
             </div>
           </div>
           <TabsList className="shrink-0">
@@ -131,9 +135,29 @@ export default function WorkflowIdPage() {
             <TabsTrigger value="analytics">Analytics</TabsTrigger>
           </TabsList>
           <div className="flex min-w-0 flex-1 items-center justify-end gap-2">
-            <Button type="button" onClick={() => setIsWorkflowDrawerOpen(true)}>
-              Settings
-            </Button>
+            <div className="flex shrink-0 items-center gap-2">
+              <CustomSwitch
+                id="is-active"
+                value={workflow.isActive}
+                onChange={(value) => {
+                  if (value) {
+                    activateWorkflow(workflow.id).then(() => {
+                      handleWorkflowChange(workflow)
+                    })
+                  } else {
+                    deactivateWorkflow(workflow.id).then(() => {
+                      handleWorkflowChange(workflow)
+                    })
+                  }
+                }}
+              />
+              <Button
+                type="button"
+                onClick={() => setIsWorkflowDrawerOpen(true)}
+              >
+                Settings
+              </Button>
+            </div>
           </div>
         </header>
         <TabsContent

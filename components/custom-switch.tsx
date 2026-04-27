@@ -7,8 +7,8 @@ import { Switch } from "./ui/switch"
 interface InputOverlappingLabelProps {
   id?: string
   isRequired?: boolean
-  label: string
-  description: string
+  label?: string | null
+  description?: string | null
   value: boolean
   errorMessage?: string
   hasError?: boolean
@@ -18,8 +18,8 @@ interface InputOverlappingLabelProps {
 const CustomSwitch = ({
   id,
   isRequired = false,
-  label,
-  description,
+  label = null,
+  description = null,
   value,
   errorMessage,
   onChange,
@@ -28,14 +28,25 @@ const CustomSwitch = ({
   const generatedId = useId()
   const resolvedId = id ?? generatedId
 
+  const showLabel = Boolean(label)
+  const showDescription = Boolean(description)
+
+  if (!showLabel && !showDescription) {
+    return (
+      <Switch id={resolvedId} checked={value} onCheckedChange={onChange} />
+    )
+  }
+
   return (
-    <>
-      <div className="w-full space-y-2">
+    <div className="w-full space-y-2">
+      {showLabel && (
         <Label htmlFor={resolvedId} className="mb-1 font-semibold">
           {label}
           {isRequired && <span className="text-destructive">*</span>}
         </Label>
-        <Switch id={resolvedId} checked={value} onCheckedChange={onChange} />
+      )}
+      <Switch id={resolvedId} checked={value} onCheckedChange={onChange} />
+      {showDescription && (
         <div className="flex w-full flex-row items-start justify-between gap-2">
           <FieldDescription
             className={cn(
@@ -47,8 +58,8 @@ const CustomSwitch = ({
             {hasError ? errorMessage : description}
           </FieldDescription>
         </div>
-      </div>
-    </>
+      )}
+    </div>
   )
 }
 
