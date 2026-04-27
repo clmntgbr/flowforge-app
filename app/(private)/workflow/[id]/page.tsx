@@ -2,6 +2,7 @@
 
 import { EndpointsSidebar } from "@/components/endpoints-sidebar"
 import { StepDrawer } from "@/components/step-drawer"
+import { Badge } from "@/components/ui/badge"
 import { Button } from "@/components/ui/button"
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs"
 import WorkflowCanvas, { WorkflowCanvasRef } from "@/components/workflow-canvas"
@@ -30,9 +31,14 @@ export default function WorkflowIdPage() {
     })
   }, [fetchWorkflow, id])
 
-  const handleWorkflowChange = useCallback((updatedWorkflow: Workflow) => {
-    setWorkflow(updatedWorkflow)
-  }, [])
+  const handleWorkflowChange = useCallback(
+    (updatedWorkflow: Workflow) => {
+      fetchWorkflow(updatedWorkflow.id).then((workflow) => {
+        setWorkflow(workflow)
+      })
+    },
+    [fetchWorkflow]
+  )
 
   const handleStepSelect = useCallback((step: Step | null) => {
     setSelectedStep(step)
@@ -91,21 +97,40 @@ export default function WorkflowIdPage() {
         className="flex min-h-0 flex-1 flex-col gap-0"
       >
         <header className="flex shrink-0 items-center gap-3 border-b border-border bg-background px-4 py-3">
-          <div className="flex min-w-0 flex-1 justify-start">
+          <div className="flex min-w-0 flex-1 items-center justify-start gap-6">
             <div className="min-w-0">
               <h1 className="truncate text-lg font-semibold">
                 {workflow.name}
               </h1>
-              <p className="truncate text-xs text-muted-foreground">
-                {workflow.description}
+              <p className="truncate text-xs leading-5 text-muted-foreground">
+                {workflow.description?.trim()}
               </p>
+            </div>
+            <div className="shrink-0">
+              {workflow.isActive ? (
+                <Badge className="border-none bg-green-600/10 text-green-600 focus-visible:ring-green-600/20 focus-visible:outline-none dark:bg-green-400/10 dark:text-green-400 dark:focus-visible:ring-green-400/40 [a&]:hover:bg-green-600/5 dark:[a&]:hover:bg-green-400/5">
+                  <span
+                    className="size-1.5 rounded-full bg-green-600 dark:bg-green-400"
+                    aria-hidden="true"
+                  />
+                  Active
+                </Badge>
+              ) : (
+                <Badge className="border-none bg-amber-600/10 text-amber-600 focus-visible:ring-amber-600/20 focus-visible:outline-none dark:bg-amber-400/10 dark:text-amber-400 dark:focus-visible:ring-amber-400/40 [a&]:hover:bg-amber-600/5 dark:[a&]:hover:bg-amber-400/5">
+                  <span
+                    className="size-1.5 rounded-full bg-amber-600 dark:bg-amber-400"
+                    aria-hidden="true"
+                  />
+                  Inactive
+                </Badge>
+              )}
             </div>
           </div>
           <TabsList className="shrink-0">
             <TabsTrigger value="overview">Overview</TabsTrigger>
             <TabsTrigger value="analytics">Analytics</TabsTrigger>
           </TabsList>
-          <div className="flex min-w-0 flex-1 justify-end">
+          <div className="flex min-w-0 flex-1 items-center justify-end gap-2">
             <Button type="button" onClick={() => setIsWorkflowDrawerOpen(true)}>
               Settings
             </Button>

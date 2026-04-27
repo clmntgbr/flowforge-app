@@ -17,6 +17,8 @@ export interface WorkflowContextType extends WorkflowState {
     id: string,
     payload: UpdateWorkflowStepsPayload
   ) => Promise<void>
+  activateWorkflow: (id: string) => Promise<void>
+  deactivateWorkflow: (id: string) => Promise<void>
   updateWorkflow: (id: string, payload: UpdateWorkflowPayload) => Promise<void>
 }
 

@@ -7,9 +7,7 @@ export interface WorkflowConnexion {
   to: string
 }
 
-export interface Workflow {
-  id: string
-  name: string
+export interface Workflow extends MinimalWorkflow {
   description?: string
   steps?: Step[]
   connexions?: WorkflowConnexion[]
@@ -20,6 +18,8 @@ export interface Workflow {
 export interface MinimalWorkflow {
   id: string
   name: string
+  isActive: boolean
+  status: string
 }
 
 export interface CreateWorkflowPayload {

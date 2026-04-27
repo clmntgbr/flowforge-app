@@ -74,6 +74,36 @@ export const putWorkflowSteps = async (
   return response.json()
 }
 
+export const putWorkflowActivate = async (id: string): Promise<void> => {
+  const response = await fetch(
+    `/api/workflow/0cc345f76b884fd580c232f270c887da/${id}/2c3d02e7e5b24f728daa8a64eeb4cd3d`,
+    {
+      method: "PUT",
+    }
+  )
+
+  if (!response.ok) {
+    throw new Error("Failed to update workflow steps")
+  }
+
+  return response.json()
+}
+
+export const putWorkflowDeactivate = async (id: string): Promise<void> => {
+  const response = await fetch(
+    `/api/workflow/0cc345f76b884fd580c232f270c887da/${id}/4efe247189b54936b2012a82e11b3bc7`,
+    {
+      method: "PUT",
+    }
+  )
+
+  if (!response.ok) {
+    throw new Error("Failed to update workflow steps")
+  }
+
+  return response.json()
+}
+
 export const putWorkflow = async (
   id: string,
   payload: UpdateWorkflowPayload

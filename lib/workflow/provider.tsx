@@ -7,6 +7,8 @@ import {
   getWorkflows,
   postWorkflow,
   putWorkflow,
+  putWorkflowActivate,
+  putWorkflowDeactivate,
   putWorkflowSteps,
 } from "./api"
 import { WorkflowContext } from "./context"
@@ -89,6 +91,22 @@ export function WorkflowProvider({ children }: { children: React.ReactNode }) {
     []
   )
 
+  const activateWorkflow = useCallback(async (id: string) => {
+    try {
+      await putWorkflowActivate(id)
+    } catch {
+      throw new Error("Failed to activate workflow")
+    }
+  }, [])
+
+  const deactivateWorkflow = useCallback(async (id: string) => {
+    try {
+      await putWorkflowDeactivate(id)
+    } catch {
+      throw new Error("Failed to deactivate workflow")
+    }
+  }, [])
+
   useEffect(() => {
     fetchWorkflows()
   }, [fetchWorkflows])
@@ -102,6 +120,8 @@ export function WorkflowProvider({ children }: { children: React.ReactNode }) {
         createWorkflow,
         updateWorkflowSteps,
         updateWorkflow,
+        activateWorkflow,
+        deactivateWorkflow,
       }}
     >
       {children}
