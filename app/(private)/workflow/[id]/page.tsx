@@ -33,16 +33,25 @@ export default function WorkflowIdPage() {
 
   useEffect(() => {
     fetchWorkflow(id as string).then((workflow) => {
+      console.log(workflow)
       setWorkflow(workflow)
     })
   }, [fetchWorkflow, id])
 
-  const handleWorkflowChange = useCallback(
-    (updatedWorkflow: Workflow) => {
-      setWorkflow(updatedWorkflow)
-    },
-    []
-  )
+  const handleWorkflowChange = useCallback((updatedWorkflow: Workflow) => {
+    setWorkflow((currentWorkflow) => {
+      if (!currentWorkflow) return updatedWorkflow
+
+      return {
+        ...currentWorkflow,
+        ...updatedWorkflow,
+        isActive: updatedWorkflow.isActive ?? currentWorkflow.isActive,
+        status: updatedWorkflow.status ?? currentWorkflow.status,
+        createdAt: updatedWorkflow.createdAt ?? currentWorkflow.createdAt,
+        updatedAt: updatedWorkflow.updatedAt ?? currentWorkflow.updatedAt,
+      }
+    })
+  }, [])
 
   const handleStepSelect = useCallback((step: Step | null) => {
     setSelectedStep(step)
@@ -88,6 +97,22 @@ export default function WorkflowIdPage() {
       }
     })
   }, [fetchWorkflow, id])
+
+  const handleWorkflowActiveChange = useCallback(
+    async (value: boolean) => {
+      if (!workflow) return
+
+      if (value) {
+        await activateWorkflow(workflow.id)
+      } else {
+        await deactivateWorkflow(workflow.id)
+      }
+
+      const refreshedWorkflow = await fetchWorkflow(workflow.id)
+      setWorkflow(refreshedWorkflow)
+    },
+    [workflow, activateWorkflow, deactivateWorkflow, fetchWorkflow]
+  )
 
   if (!workflow) {
     return <div>Loading...</div>
@@ -137,17 +162,7 @@ export default function WorkflowIdPage() {
               <CustomSwitch
                 id="is-active"
                 value={workflow.isActive}
-                onChange={(value) => {
-                  if (value) {
-                    activateWorkflow(workflow.id).then(() => {
-                      handleWorkflowChange(workflow)
-                    })
-                  } else {
-                    deactivateWorkflow(workflow.id).then(() => {
-                      handleWorkflowChange(workflow)
-                    })
-                  }
-                }}
+                onChange={handleWorkflowActiveChange}
               />
               <Button
                 type="button"
