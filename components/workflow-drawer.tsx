@@ -60,7 +60,11 @@ export function WorkflowDrawer({
       description: data.description,
     })
     setIsLoading(false)
-    onUpdate(workflow)
+    onUpdate({
+      ...workflow,
+      name: data.name,
+      description: data.description,
+    })
     onClose()
   }
 

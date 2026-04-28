@@ -39,11 +39,9 @@ export default function WorkflowIdPage() {
 
   const handleWorkflowChange = useCallback(
     (updatedWorkflow: Workflow) => {
-      fetchWorkflow(updatedWorkflow.id).then((workflow) => {
-        setWorkflow(workflow)
-      })
+      setWorkflow(updatedWorkflow)
     },
-    [fetchWorkflow]
+    []
   )
 
   const handleStepSelect = useCallback((step: Step | null) => {
