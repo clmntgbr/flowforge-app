@@ -6,6 +6,7 @@ import { StepProvider } from "@/lib/step/provider"
 import { ThemeProvider } from "@/lib/theme/theme-provider"
 import { UserProvider } from "@/lib/user/provider"
 import { WorkflowProvider } from "@/lib/workflow/provider"
+import { WorkflowRunProvider } from "@/lib/workflow_run/provider"
 
 export default function PrivateLayout({
   children,
@@ -24,14 +25,16 @@ export default function PrivateLayout({
           <EndpointProvider>
             <WorkflowProvider>
               <StepProvider>
-                <ConnexionProvider>
-                  <SidebarProvider
-                    defaultOpen={false}
-                    className="h-full min-h-0"
-                  >
-                    {children}
-                  </SidebarProvider>
-                </ConnexionProvider>
+                <WorkflowRunProvider>
+                  <ConnexionProvider>
+                    <SidebarProvider
+                      defaultOpen={false}
+                      className="h-full min-h-0"
+                    >
+                      {children}
+                    </SidebarProvider>
+                  </ConnexionProvider>
+                </WorkflowRunProvider>
               </StepProvider>
             </WorkflowProvider>
           </EndpointProvider>

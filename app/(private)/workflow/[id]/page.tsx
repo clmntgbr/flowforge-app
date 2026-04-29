@@ -8,9 +8,12 @@ import { Button } from "@/components/ui/button"
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs"
 import WorkflowCanvas, { WorkflowCanvasRef } from "@/components/workflow-canvas"
 import { WorkflowDrawer } from "@/components/workflow-drawer"
+import { Paginate } from "@/lib/paginate"
 import { Step, UpdateWorkflowStepPayload } from "@/lib/step/types"
 import { useWorkflow } from "@/lib/workflow/context"
 import { Workflow } from "@/lib/workflow/types"
+import { useWorkflowRun } from "@/lib/workflow_run/context"
+import { WorkflowRun } from "@/lib/workflow_run/types"
 import { useParams } from "next/navigation"
 import { useCallback, useEffect, useRef, useState } from "react"
 
@@ -25,18 +28,25 @@ export default function WorkflowIdPage() {
     activateWorkflow,
     deactivateWorkflow,
   } = useWorkflow()
+  const { fetchWorkflowRuns } = useWorkflowRun()
+
   const [selectedStep, setSelectedStep] = useState<Step | null>(null)
   const [isDrawerOpen, setIsDrawerOpen] = useState(false)
   const [isWorkflowDrawerOpen, setIsWorkflowDrawerOpen] = useState(false)
 
   const [workflow, setWorkflow] = useState<Workflow | null>(null)
+  const [workflowRuns, setWorkflowRuns] =
+    useState<Paginate<WorkflowRun> | null>(null)
 
   useEffect(() => {
     fetchWorkflow(id as string).then((workflow) => {
       console.log(workflow)
       setWorkflow(workflow)
+      fetchWorkflowRuns(workflow.id).then((workflowRuns) => {
+        setWorkflowRuns(workflowRuns)
+      })
     })
-  }, [fetchWorkflow, id])
+  }, [fetchWorkflow, id, fetchWorkflowRuns])
 
   const handleWorkflowChange = useCallback((updatedWorkflow: Workflow) => {
     setWorkflow((currentWorkflow) => {
