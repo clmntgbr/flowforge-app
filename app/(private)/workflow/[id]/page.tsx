@@ -40,7 +40,6 @@ export default function WorkflowIdPage() {
 
   useEffect(() => {
     fetchWorkflow(id as string).then((workflow) => {
-      console.log(workflow)
       setWorkflow(workflow)
       fetchWorkflowRuns(workflow.id).then((workflowRuns) => {
         setWorkflowRuns(workflowRuns)
